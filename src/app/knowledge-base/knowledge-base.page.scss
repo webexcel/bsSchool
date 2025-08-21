@@ -1,0 +1,60 @@
+
+  
+  .thumbnail-container {
+    position: relative;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    cursor: pointer;
+  }
+  
+  .thumbnail_img {
+    width: 100%;
+    filter: blur(2px);
+    transition: filter 0.3s;
+  }
+  
+  .play-icon {
+    color: black;
+    opacity: 0.8;
+  }
+  
+  .play-icon-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    color: white;
+  }
+  
+  .video-player {
+    width: 100%;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: space-between;
+    padding: 15px;
+  }
+  
+  .item1 {
+    flex: 1 1 calc(33.333% - 16px);
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  .item1 img {
+    width: 65px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .item1 ion-label {
+    display: block;
+    margin-top: 8px;
+    font-size: 14px;
+  }

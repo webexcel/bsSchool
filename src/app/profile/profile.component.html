@@ -1,0 +1,252 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ "profile" | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- <pinch-zoom backgroundColor="rgba(0,0,0,0)"> -->
+  <div style="height: 100% !important; width: 100%">
+    <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+      <ion-toolbar class="p-0">
+        <ion-buttons slot="start">
+          <ion-menu-button><ion-icon class="text-white" [ios]="'menu-sharp'"
+              [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+        </ion-buttons>
+        <ion-title>{{ "profile" | translate }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <div class="profile">
+      <app-segment (item)="selected($event)"></app-segment>
+
+      <div *ngIf="show" style="padding: 10px 10px 20px 10px;">
+        <div style="margin-top: 12px; margin-bottom: 5px; color: #5886fe;">Admission No</div>
+        <ion-item lines="full" class="messageArea" disabled>
+          <ion-input type="text" [(ngModel)]="details.adno"></ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-bottom: 5px; color: #5886fe;">Parent Name</div>
+        <ion-item lines="full" class="messageArea">
+          <ion-input type="text" [(ngModel)]="details.parent"></ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-bottom: 5px; color: #5886fe;">House No</div>
+        <ion-item lines="full" class="messageArea">
+          <ion-input type="text" [(ngModel)]="details.house_no"></ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-bottom: 5px; color: #5886fe;">Street</div>
+        <ion-item lines="full" class="messageArea">
+          <ion-input type="text" [(ngModel)]="details.street"></ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-bottom: 5px; color: #5886fe;">Address</div>
+        <ion-item lines="full" class="messageArea">
+          <ion-input type="text" [(ngModel)]="details.address"></ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-bottom: 5px; color: #5886fe;">City</div>
+        <ion-item lines="full" class="messageArea">
+          <ion-input type="text" [(ngModel)]="details.city"></ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-bottom: 5px; color: #5886fe;">Pincode</div>
+        <ion-item lines="full" class="messageArea">
+          <ion-input type="number" [(ngModel)]="details.pincode"></ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-bottom: 5px; color: #5886fe;">Contact No-1</div>
+        <ion-item lines="full" class="messageArea">
+          <ion-input type="number" [(ngModel)]="details.con_no_1">
+          </ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-bottom: 5px; color: #5886fe;">Contact No-2</div>
+        <ion-item lines="full" class="messageArea">
+          <ion-input type="number" [(ngModel)]="details.con_no_2"></ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-bottom: 5px; color: #5886fe;">Date of Birth</div>
+        <ion-item lines="full" class="messageArea">
+          <ion-label (click)="toggleDateSelect()" class="selected-date">
+            <span style="float: left">
+              {{ formatDate(details.dob) }}</span>
+
+            <span style="float: right !important">
+              <img style="height: 6px; width: 10px; margin-right: 5px" src="../../assets/imgs/speakers/Polygon 4.png" />
+            </span>
+          </ion-label>
+
+          <ion-modal [isOpen]="isDatePickerOpen" trigger="open-modal" (willDismiss)="onWillDismiss($event)"
+            [initialBreakpoint]="0.5" [breakpoints]="[0, 0.25, 0.5, 0.75]" animated="true">
+            <ng-template>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-buttons slot="start">
+                    <ion-button (click)="toggleDateSelect()">Cancel</ion-button>
+                  </ion-buttons>
+                  <ion-buttons slot="end">
+                    <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="ion-padding">
+                <ion-datetime name="dob" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="s_date"
+                  #dob="ngModel" presentation="date" mode="md" #datetime (ionChange)="showHideDatePicker()">
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-bottom: 5px; color: #5886fe;">Blood Group</div>
+        <ion-item lines="full" class="messageArea">
+          <ion-select [(ngModel)]="details.bg">
+            <ion-select-option *ngFor="let item of bloodGrp" [value]="item.id">{{item.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-buttons style="display: flex; justify-content: center; margin-top: 20px;">
+          <ion-button (click)="onSubmit()"
+            style="border: 1px solid blue; border-radius: 10px; width: 50%; color: blue;">Save</ion-button>
+        </ion-buttons>
+      </div>
+
+
+
+
+
+
+      <!-- <ion-card class="card-cls" *ngIf="show">
+        <ion-card-content>
+          <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            <ion-list>
+              <ion-item>
+                <ion-label position="floating">{{
+                  "parentname" | translate
+                  }}</ion-label>
+                <ion-input type="text" name="parent" [(ngModel)]="details.parent" #parent="ngModel"
+                  required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">{{
+                  "houseno" | translate
+                  }}</ion-label>
+                <ion-input type="text" name="house_no" (input)="details.house_no = namedata($event)"
+                  [(ngModel)]="details.house_no" #house_no="ngModel" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">{{
+                  "street" | translate
+                  }}</ion-label>
+                <ion-input type="text" name="street" (input)="details.street = namedata($event)"
+                  [(ngModel)]="details.street" #street="ngModel" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">{{
+                  "address" | translate
+                  }}</ion-label>
+                <ion-input type="text" name="address" (input)="details.address = namedata($event)"
+                  [(ngModel)]="details.address" #address="ngModel" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">{{
+                  "city" | translate
+                  }}</ion-label>
+                <ion-input type="text" name="city" (input)="details.city = namedata($event)" [(ngModel)]="details.city"
+                  #city="ngModel" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">{{
+                  "pincode" | translate
+                  }}</ion-label>
+                <ion-input type="text" name="pincode" (input)="details.pincode = pincodedata($event)"
+                  (blur)="details.pincode = pincodedata($event)" maxlength="6" [(ngModel)]="details.pincode"
+                  pattern="[0-9]{6}" #pincode="ngModel" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">{{ "contantno" | translate }} - 1</ion-label>
+                <ion-input type="text" (input)="details.con_no_1 = phonedata($event)"
+                  (blur)="details.con_no_1 = phonedata($event)" maxlength="10" name="con_no_1" pattern="[0-9]{10}"
+                  [(ngModel)]="details.con_no_1" #con_no_1="ngModel" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">{{ "contantno" | translate }} - 2</ion-label>
+                <ion-input type="text" (input)="details.con_no_2 = phonedata($event)"
+                  (blur)="details.con_no_2 = phonedata($event)" maxlength="10" name="con_no_2" pattern="[0-9]{10}"
+                  [(ngModel)]="details.con_no_2" #con_no_2="ngModel" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label id="open-modal">{{ "dateofbirth" | translate }}
+                  <ion-label class="selected-dob" *ngIf="details.dob">
+                    {{ formatDate(details.dob) }}
+                  </ion-label>
+                </ion-label>
+                <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)" [initialBreakpoint]="0.5"
+                  [breakpoints]="[0, 0.25, 0.5, 0.75]">
+                  <ng-template>
+                    <ion-header>
+                      <ion-toolbar>
+                        <ion-buttons slot="start">
+                          <ion-button (click)="cancel()">{{
+                            "cancel" | translate
+                            }}</ion-button>
+                        </ion-buttons>
+                        <ion-title>{{ "select_dob" | translate }}</ion-title>
+                        <ion-buttons slot="end">
+                          <ion-button (click)="confirm()" [strong]="true">{{
+                            "confirm" | translate
+                            }}</ion-button>
+                        </ion-buttons>
+                      </ion-toolbar>
+                    </ion-header>
+                    <ion-content class="ion-padding">
+                      <ion-datetime name="dob" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"
+                        [(ngModel)]="details.dob" #dob="ngModel" presentation="date" mode="md" #datetime
+                        (ionChange)="showHideDatePicker()" required>
+                      </ion-datetime>
+                    </ion-content>
+                  </ng-template>
+                </ion-modal>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">{{
+                  "bloodgroup" | translate
+                  }}</ion-label>
+                <ion-select name="bg" [(ngModel)]="details.bg" #bg="ngModel" required>
+                  <ion-select-option *ngFor="let item of bloodGrp" [value]="item.id">{{item.name}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+
+            <div style="float: right; padding-bottom: 20px; padding-top: 12px">
+              <ion-button (click)="onSubmit()" expand="" shape="round">{{
+                "save" | translate
+                }}</ion-button>
+            </div>
+          </form>
+        </ion-card-content>
+      </ion-card> -->
+    </div>
+  </div>
+  <!-- </pinch-zoom> -->
+</ion-content>

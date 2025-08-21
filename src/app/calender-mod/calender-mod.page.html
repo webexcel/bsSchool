@@ -1,0 +1,91 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Calender</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-row>
+    <ion-col size="2">
+      <ion-button fill="clear" (click)="back()">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+
+    <ion-col size="8" class="ion-text-center">
+      <h2>{{ viewTitle }}</h2>
+    </ion-col>
+
+    <ion-col size="2">
+      <ion-button fill="clear" (click)="next()">
+        <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
+    (onEventSelected)="onEventSelected($event)" (onTitleChanged)="onViewTitleChanged($event)" [startHour]="6"
+    [endHour]="20" [step]="30" [startingDayWeek]="1" [monthviewDisplayEventTemplate]="template">
+  </calendar>
+
+  <ng-template #template let-view="view" let-row="row" let-col="col">
+    <div [class.with-event]="view.dates[row*7+col].events.length">
+      {{view.dates[row*7+col].label}}
+      <div class="indicator-container">
+        <div class="event-indicator" *ngFor="let e of view.dates[row*7+col].events; let i = index"
+          [style.background]="view.dates[row*7+col].events[i]?.color"></div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="add_position">
+    <ion-fab-button (click)="onViewTitleChanged('current')" class="add_float_button">Today</ion-fab-button>
+  </ion-fab>
+
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar style="--background: #3880ff; color: white;">
+          <ion-title>Event Details</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal()" style="color: white;"><ion-icon name="close"></ion-icon></ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content style="padding: 16px; --background: #f1efef;">
+        <div style="margin: 20px;">
+          <ion-row style="align-items: center; margin-bottom: 16px;">
+            <ion-col size="6" style="font-weight: bold; font-size: 16px;">Event Name</ion-col>
+            <ion-col style="font-size: 14px;">{{ selectedEvent?.title }}</ion-col>
+          </ion-row>
+
+          <ion-row style="align-items: center; margin-bottom: 16px;">
+            <ion-col size="6" style="font-weight: bold; font-size: 16px;">Event Starts In</ion-col>
+            <ion-col style="font-size: 14px;">{{ formatDate(selectedEvent?.startDate) }}</ion-col>
+          </ion-row>
+
+          <ion-row style="align-items: center; margin-bottom: 16px;">
+            <ion-col size="6" style="font-weight: bold; font-size: 16px;">Event Ends In</ion-col>
+            <ion-col style="font-size: 14px;">{{ formatDate(selectedEvent?.endDate) }}</ion-col>
+          </ion-row>
+
+          <div *ngIf="selectedEvent?.calenderImage" style="display: flex; justify-content: center; margin-top: 25px;">
+            <img [src]="selectedEvent?.calenderImage" alt="Event Image"
+              style="max-width: 100%; max-height: 400px; border-radius: 20px;" />
+          </div>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

@@ -1,0 +1,142 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ "attendance" | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+    <ion-toolbar class="p-0">
+      <ion-buttons slot="start">
+        <ion-menu-button
+          ><ion-icon
+            class="text-white"
+            [ios]="'menu-sharp'"
+            [md]="'menu-sharp'"
+          ></ion-icon
+        ></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{ "attendance" | translate }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="reportcard">
+    <app-segment (item)="selected($event)"></app-segment>
+    <!-- <ion-card class="card-cls">
+      <ion-card-content>
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Department</th>
+              <th>Period</th>
+              <th>Theory (%)</th>
+              <th>Practical (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of data">
+              <td>{{ s.department }}</td>
+              <td>{{ s.period_name }}</td>
+              <td>{{ s.Theory }}</td>
+              <td>{{ s.Practical }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ion-card-content>
+    </ion-card> -->
+    <!-- <app-segment (item)="selected($event)"></app-segment> -->
+    <!-- <div class="attendance calendar">
+      <ion-card class="card-cls">
+        <ion-card-content>
+          <div class="calendar-body">
+            <ion-grid>
+              <ion-row class="calendar-month">
+                <ion-col (click)="goToLastMonth()" class="col-2">
+                  <ion-icon [md]="'arrow-back'" [ios]="'arrow-back'"></ion-icon>
+                </ion-col>
+                <ion-col class="text-center col-8"
+                  >{{ currentMonth | translate }} {{ currentYear }}</ion-col
+                >
+                <ion-col (click)="goToNextMonth()" class="text-right col-2">
+                  <ion-icon
+                    [md]="'arrow-forward'"
+                    [ios]="'arrow-forward'"
+                  ></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-row class="calendar-weekday">
+                <ion-col>{{ "su" | translate }}</ion-col>
+                <ion-col>{{ "mo" | translate }}</ion-col>
+                <ion-col>{{ "tu" | translate }}</ion-col>
+                <ion-col>{{ "we" | translate }}</ion-col>
+                <ion-col>{{ "th" | translate }}</ion-col>
+                <ion-col>{{ "fr" | translate }}</ion-col>
+                <ion-col>{{ "sa" | translate }}</ion-col>
+              </ion-row>
+              <ion-row class="calendar-date">
+                <ion-col
+                  col-1
+                  col1
+                  *ngFor="let lastDay of daysInLastMonth"
+                  class="last-month"
+                  >{{ lastDay }}</ion-col
+                >
+                <ion-col
+                  col-1
+                  col1
+                  *ngFor="let day of daysInThisMonth"
+                  [class.aub]="day.aub"
+                  [class.currentDate]="currentDate === day.num && !day.aub"
+                >
+                  <ng-template #otherDate> 
+                  {{ day.num }}
+                  </ng-template>
+                <div class="items" [class.aub]="day.aub">
+                  <span class="currentDate"
+                    *ngIf="currentDate === day.num && !day.aub; else otherDate">{{day.num}}</span>
+                </div> 
+                </ion-col>
+                <ion-col
+                  col-1
+                  col1
+                  *ngFor="let nextDay of daysInNextMonth"
+                  class="next-month"
+                  >{{ nextDay }}</ion-col
+                >
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-card-content>
+      </ion-card>
+      <ion-card class="card-cls">
+        <ion-card-content>
+          <table class="custom-table">
+            <thead>
+              <th>#</th>
+              <th>{{ "name" | translate }}</th>
+              <th>
+                {{ "class" | translate }}
+              </th>
+              <th>
+                {{ "absent_dates" | translate }}
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let d of data.detail; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td class="textleft">{{ d.NAME }}</td>
+                <td class="textleft">{{ d.CLASSSEC }}</td>
+                <td class="textleft">{{ d.absent }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ion-card-content>
+      </ion-card>
+    </div> -->
+  </div>
+</ion-content>

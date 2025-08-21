@@ -1,0 +1,183 @@
+.dashcard {
+  border-radius: 20px;
+  margin: 25px;
+  background-color: #4475de;
+  color: white;
+}
+
+.dashcardContent {
+  padding: 0px;
+  margin: -5px;
+}
+
+.img-thumbnail.dash {
+  border-radius: 50px;
+  padding: 0em;
+  height: 55px;
+  width: 55px;
+}
+
+.name {
+  color: #fff;
+  font-weight: 500;
+  font-family: "roboto";
+  font-size: 15px;
+  line-height: 1.2em;
+} 
+
+.IDSection {
+  color: #fff;
+  font-weight: 500;
+  font-family: "roboto";
+  font-size: 15px;
+  line-height: 1.2em;
+}
+
+.contact {
+  color: #fff;
+  font-weight: 500;
+  font-family: "roboto";
+  font-size: 15px;
+  line-height: 1.2em;
+  display: inline-block;
+}
+
+.section {
+  color: #45406e;
+  font-weight: 500;
+  font-family: "roboto";
+  font-size: 12px;
+  line-height: 1em;
+}
+
+.IDSecRow {
+  margin: -5px;
+}
+
+.iconTitle {
+  font-family: "roboto";
+  margin-top: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #45406e;
+}
+
+.pb-2.bg-white {
+  margin: 20px;
+}
+
+ion-content {
+  --background: url(../../assets/imgs/dashboard/dashboardbg.png) no-repeat
+    center/cover fixed;
+}
+
+.feesTextCard {
+  background-color: white;
+  border-radius: 50px;
+  margin: 25px;
+}
+
+.feestext {
+  font-family: "roboto";
+  font-size: 13px;
+  font-weight: 500;
+  color: black;
+}
+
+.btn.pay {
+  background-color: #efba00;
+  border-radius: 50px;
+  color: black;
+  font-size: 11px;
+  margin: -5px;
+  font-weight: 500;
+}
+
+.feesTextContent {
+  padding: 14px;
+}
+
+.imgBg {
+  border-radius: 50px;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  background-color: #e5e5e5;
+}
+
+.icon-img {
+  // width: 50px;
+  //height: 50px;
+  margin: auto;
+}
+.dash-icon {
+  height: 55px;
+  // padding: auto;
+  line-height: 90px;
+}
+ion-modal {
+  --height: auto;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+ion-modal::part(backdrop) {
+  background: rgba(209, 213, 219);
+  opacity: 1;
+}
+
+ion-modal ion-toolbar {
+  --background: rgb(14 116 144);
+  --color: white;
+}
+.descript {
+  margin: 15px !important;
+  font-size: 18px;
+}
+
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.zoom-animation {
+  animation: zoomInOut 1s infinite;
+}
+
+.dash-icon {
+  position: relative;
+}
+
+.badge {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-family: inherit;
+  line-height: 1.5;
+}

@@ -1,0 +1,129 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ "news-events" | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- <pinch-zoom backgroundColor="rgba(0,0,0,0)"> -->
+  <div style="height: 100% !important; width: 100%">
+    <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+      <ion-toolbar class="p-0">
+        <ion-buttons slot="start">
+          <ion-menu-button><ion-icon class="text-white" [ios]="'menu-sharp'"
+              [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+        </ion-buttons>
+        <ion-title>{{ "news-events" | translate }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <div class="news" *ngIf="show">
+      <!-- <div class="card m-3 shadow-lg" >
+      <ngx-extended-pdf-viewer 
+      [src]="'http://sms.schooltree.in/uploads/demosch/Yoga Circular 14.06.pdf'"
+        [height]="'667px'"
+        backgroundColor="#ffffff"
+      [useBrowserLocale]="true"
+      [mobileFriendlyZoom]="'150%'"
+        [showSecondaryToolbarButton]="false"
+
+      [isLast]='true'
+      (ngInit)="exportAsImage()" >
+</ngx-extended-pdf-viewer>
+       <div class="card-body card_body">
+        <div class="calendar-body">
+          <div class="datewidth">
+            <div class="fon18">2022-05-20</div>
+          </div>
+          <div class="titlewidth">Testing</div>
+          <div class="clrflt">Welcome to parentalert</div>
+        </div>
+      </div> 
+    </div> -->
+
+      <ion-card class="card-cls" *ngFor="let image of newsImages">
+        <ion-card-content>
+          <!-- <pinch-zoom backgroundColor="rgba(0,0,0,0)"> -->
+          <div *ngIf="image.base64.length > 0">
+            <img class="card-img-top" src="{{ image.base64 }}" alt="" />
+          </div>
+          <!-- </pinch-zoom> -->
+
+          <!-- <pinch-zoom backgroundColor="rgba(0,0,0,0)"> -->
+          <div *ngIf="checkimage(image.event_image) && image.base64.length == 0">
+            <img class="card-img-top" src="{{ image.event_image }}" alt="" />
+          </div>
+          <!-- </pinch-zoom> -->
+
+          <div class="card-header" *ngIf="checkpdf(image.event_image) && image.base64.length == 0">
+            <div class="row w-100 align-items-center m-0">
+              <div class="col-7">
+                {{ getfilename(image.event_image) }}
+              </div>
+              <div class="col-5 text-right m-0 p-0">
+                <button type="button" class="btn btn-primary m-0 px-0" (click)="authservice.open(image.event_image)">
+                  <img class="w-25" src="../../assets/imgs/speakers/pdf.png" />
+                  Download
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body card_body">
+            <div class="row w-100 m-0">
+              <div class="space-between">
+                <div class="col-8 fon18">
+                  {{ image.Title }}
+                </div>
+                <div class="col-4 text-right1">
+                  <span class="date">{{
+                    authservice.getday(image.NewsADate)
+                    }}</span><span class="month">{{
+                    authservice.getshormonth(image.NewsADate)
+                    }}</span>
+                </div>
+              </div>
+              <div class="col-12">
+                <hr />
+              </div>
+              <div class="col-12 description" [innerHTML]="authservice.urlify(image.Discription)">
+
+              </div>
+            </div>
+            <!-- <div class="datewidth">
+
+            <div class="fon18">{{image.NewsADate}}</div>
+          </div>
+          <div class="titlewidth">{{image.Title}}</div>
+          <div class="clrflt">{{image.Discription}}</div> -->
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="card-cls1" *ngIf="newsImages.length == 0 && show == true">
+        <ion-card-content class="card-body card_body card-cls-inside">
+          <table class="custom-table">
+            <tbody>
+              <tr>
+                <td class="ion-text-center">
+                  {{ "no_records_found" | translate }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+  <!-- </pinch-zoom> -->
+</ion-content>

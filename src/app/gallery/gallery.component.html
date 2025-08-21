@@ -1,0 +1,57 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ "gallery" | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- <pinch-zoom backgroundColor="rgba(0,0,0,0)"> -->
+  <div style="height: 100% !important; width: 100%">
+    <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+      <ion-toolbar class="p-0">
+        <ion-buttons slot="start">
+          <ion-menu-button><ion-icon class="text-white" [ios]="'menu-sharp'"
+              [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+        </ion-buttons>
+        <ion-title>{{ "gallery" | translate }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <div class="gallery" *ngIf="show">
+      <div class="card m-3 shadow-lg" *ngFor="let image of galleryImages">
+        <!-- <img class="card-img-top" src="{{imageurl}}/{{image.CatID}}/{{image.GalPath}}" alt=""
+        routerLink="/gallery/subgallery/{{image.CatID}}"> -->
+        <img class="card-img-top" src="{{ image.base64 }}" alt="" routerLink="/gallery/subgallery/{{ image.CatID }}"
+          *ngIf="image.base64.length > 0" />
+
+        <img class="card-img-top"
+          src="{{  image.GalPath.startsWith('http') ? image.GalPath: imageurl + '/' + image.CatID + '/' + image.GalPath }}"
+          alt="" *ngIf="image.base64.length == 0" routerLink="/gallery/subgallery/{{ image.CatID }}" />
+        <!-- <img class="card-img-top" [src]="serfile.checkfile(imageurl+'/'+image.CatID+'/'+image.GalPath)" alt=""
+        routerLink="/gallery/subgallery/{{image.CatID}}"> -->
+
+        <div class="card-body card_body">
+          <div class="calendar-body">
+            <div class="datewidth">
+              <div class="fon18">{{ image.SMSdate }}</div>
+              <div>{{ image.SMSMonth }}</div>
+            </div>
+            <div class="titlewidth">{{ image.CatName }}</div>
+            <div class="clrflt">{{ image.Description }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </pinch-zoom> -->
+</ion-content>

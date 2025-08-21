@@ -1,0 +1,7 @@
+{
+  "name": "com.schooltree.sahayamatha",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

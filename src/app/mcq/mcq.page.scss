@@ -1,0 +1,85 @@
+.quesNumClass {
+  width: 15%; /* Adjusted width to fit 5 items per row */
+  aspect-ratio: 1; /* Ensures the element is a perfect square */
+  border: 1px solid gray;
+  border-radius: 50%; /* Makes the element round */
+  margin: 1%; /* Margin between items */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: normal; /* Resets line-height */
+  color: #656565;
+}
+
+.quesAnswered {
+  background-color: #E0FFE3;
+  color: #656565;
+}
+
+.quesSkipped {
+  background-color: #FFEBEB;
+  color: #656565;
+}
+
+.currentQuestion {
+  background-color: #5886FE;
+  color: white;
+}
+
+.quesCardClass {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+}
+
+.quesCardClass.show {
+  opacity: 1;
+}
+
+.optClass {
+  margin: 5%;
+  border: 2px solid rgba(199, 199, 199, 0.349);
+  min-height: 35px;
+  border-radius: 10px;
+  padding: 2%;
+}
+
+.optImgClass {
+  border: 2px solid lightgrey;
+  border-radius: 5px;
+}
+
+.selectedOpt {
+  background-color: #5886FE;
+  color: white;
+}
+
+.selectedOptImg {
+  border: 5px solid #5886FE;
+}
+
+.image-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 5px;
+}
+
+.image-item {
+  width: 100%;
+  height: auto;
+}
+
+.correctQues {
+  background-color: #E0FFE3;
+}
+
+.wrongQues {
+  background-color: #FFEBEB;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #465fb3, #7c8cc9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

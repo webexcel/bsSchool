@@ -1,0 +1,138 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ 'fee-details' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <app-segment (item)="selected($event)"></app-segment>
+  <div class="fee_details">
+    <div class="card m-3 shadow-lg" *ngIf="paymentlist.length>0">
+      <div class="card-body card_body text-center">
+        <ion-list>
+          <span *ngFor="let checkbox of paymentlist; let i = index">
+            <ion-item *ngIf="!checkbox.hidden">
+              <ion-label>{{checkbox.installment}}</ion-label>
+              <ion-checkbox [checked]="checkbox.isItemChecked" (ionChange)="onchangeevent($event, i)"></ion-checkbox>
+            </ion-item>
+          </span>
+          <ion-item *ngIf="paymentlist.length>0">
+            <div class="row w-100 text-right">
+              <div class="col-12">
+                <button type="button" class="btn btn-success" (click)="paydetails()"
+                  [disabled]="paybutton || selectinterval.length==0">Get Fees Details</button>
+              </div>
+            </div>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+
+    <div class="card m-3 shadow-lg" *ngIf="paydatas.length>0">
+      <div class="card-body card_body text-center">
+        <table class="custom-table">
+          <thead class="thead-dark">
+            <tr>
+              <th>FEE HEAD</th>
+              <th>TOTAL AMOUNT</th>
+              <th>TOTAL PAID</th>
+              <th>AS OF BAL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of paydatas; let i=index;">
+              <td class="text-left">{{x.feeheads | uppercase}}</td>
+              <td class="text-right">{{x.Total_Amount}}</td>
+              <td class="text-right">{{x.PaidAmount}}</td>
+              <td class="text-right">{{x.Balance_Amount}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Total</td>
+              <td class="text-right">{{totalfee.toFixed(2)}}</td>
+              <td class="text-right">{{totalpaid.toFixed(2)}}</td>
+              <td class="text-right">{{asofbal.toFixed(2)}}</td>
+            </tr>
+            <!-- <tr class="text-right" *ngIf="asofbal > 0">
+              <td colspan="4"><button type="button" class="btn btn-success" (click)="pay()">Pay Fees</button></td>
+            </tr> -->
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <div *ngIf="recIDArray.length > 0"
+        style="margin: 10px; background-color: #4475de; color: white; border-radius: 10px; padding: 10px;">
+        <ion-label>Paid Details:</ion-label>
+      </div>
+      <div *ngFor="let item of recIDArray">
+        <ion-card *ngFor="let x of paymentHistoryArray[item]">
+          <ion-card-content>
+            <ion-label style="display: block;">Date : {{x.DATE}}</ion-label>
+            <ion-label style="display: block;">FEE HEAD : {{x.FEE_HEAD | uppercase}}</ion-label>
+            <ion-label style="display: block;">FEE TYPE : {{x.FEE_TYPE}}</ion-label>
+            <ion-label style="display: block;">TOTAL PAID : {{x.PAID_AMOUNT}}</ion-label>
+
+            <ion-buttons style="display: flex; justify-content: center; margin-top: 10px;">
+              <ion-button (click)="downloadPDF(paymentHistoryArray[item][0])"
+                style="border-radius: 10px; background-color: #4475de; color: white;">Download Bill</ion-button>
+            </ion-buttons>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+
+    <!-- <mat-accordion class="example-headers-align">
+      <mat-expansion-panel class="matPanel" *ngFor="let item of recIDArray">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{paymentHistoryArray[item][0].DATE}} Rec ID:{{item}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <table class="table table-bordered w-100">
+          <thead class="thead-dark">
+            <tr>
+              <th>FEE HEAD</th>
+              <th>FEE TYPE</th>
+              <th>TOTAL PAID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of paymentHistoryArray[item]">
+              <td class="text-left">{{x.FEE_HEAD | uppercase}}</td>
+              <td class="text-right">{{x.FEE_TYPE}}</td>
+              <td class="text-right">{{x.PAID_AMOUNT}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td>Total</td>
+              <td>Total</td>
+              <td class="text-right">{{paymentHistoryArray[item]['PAID_AMOUNT'].toFixed(2)}}</td>
+            </tr>
+            <tr class="text-right">
+              <td colspan="4"><button size="small" type="button" class="btn btn-success"
+                  (click)="downloadPDF(paymentHistoryArray[item][0])">Download PDF</button></td>
+            </tr>
+          </tfoot>
+        </table>
+      </mat-expansion-panel>
+    </mat-accordion> -->
+  </div>
+
+</ion-content>

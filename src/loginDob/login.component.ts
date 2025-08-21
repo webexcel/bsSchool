@@ -1,0 +1,280 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AppMinimize } from '@ionic-native/app-minimize/ngx';
+import { Device } from '@ionic-native/device/ngx';
+import { AlertController, Platform } from '@ionic/angular';
+import { environment } from '../../environments/environment';
+import { AuthService } from '../service/auth.service';
+import { DataService } from '../service/data.service';
+import { LoadingService } from '../service/loading.service';
+import { StorageService } from '../service/storage.service';
+import { TranslateConfigService } from '../service/translate-config.service';
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+})
+export class LoginComponent implements OnInit {
+  logo: any = environment.login_logo;
+  school_name: any = environment.school_name;
+  authForm: any = {};
+  app_versionCode: any = environment.app_versionCode;
+  mobilNumber: any;
+  values: any;
+  getLoginValue: any;
+  myData: any;
+  storeFirBaseStatus: any;
+  getStudentDetails: any;
+  enter_registered_mobile_number: any;
+  enter_admission_number: any;
+  cancel: any;
+  validate: any;
+
+  constructor(
+    private platform: Platform,
+    private appMinimize: AppMinimize,
+    public loading: LoadingService,
+    private translate: TranslateConfigService,
+    private dataservice: DataService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private device: Device,
+    public authservice: AuthService,
+    public storage: StorageService,
+    private alertCtrl: AlertController
+  ) {
+    this.platform.backButton.subscribe(() => {
+      let p = this.storage.get('page');
+      if (p == 'login') {
+        this.appMinimize.minimize();
+      }
+    });
+  }
+
+  ngOnInit() {
+    this.translate.set();
+    this.translate
+      .getparam('enter_registered_mobile_number')
+      .then((v) => (this.enter_registered_mobile_number = v));
+    this.translate
+      .getparam('enter_admission_number')
+      .then((v) => (this.enter_admission_number = v));
+    this.translate.getparam('cancel').then((v) => (this.cancel = v));
+    this.translate.getparam('validate').then((v) => (this.validate = v));
+    this.storage.add('first', '2');
+  }
+
+  phonedata(data) {
+    return (data.target.value = data.target.value
+      .replace(/[^0-9.]/g, '')
+      .slice(0, 10));
+  }
+
+  replaceholder(t) {
+    t.target.placeholder = this.enter_registered_mobile_number;
+  }
+
+  submitForm() {
+    this.loading.present();
+    this.app_versionCode = environment.app_versionCode;
+    this.mobilNumber = this.authForm.username;
+    let value: any = {
+      platform_type: this.device.platform,
+      manufacturer_name: this.device.manufacturer,
+      manufacturer_model: this.device.cordova,
+      os_version: this.device.version,
+      deviceid: this.device.serial,
+      mobile_no: this.mobilNumber,
+      app_version_code: this.app_versionCode,
+    };
+    this.authservice.post('mobileinstallsnew', value).subscribe(
+      (result) => {
+        this.getLoginValue = result;
+        this.myData = this.getLoginValue.data;
+        console.log(this.getLoginValue);
+        if (this.getLoginValue.status == true) {
+          this.storage.add('mobileid', this.myData.id);
+          this.storage.add('otp', this.myData.sname);
+          this.checkOTPAndIDLogin(this.myData.sname);
+        } else {
+          // this.openalert(this.getLoginValue.message)
+        }
+        this.loading.dismissAll();
+      },
+      (err) => {
+        this.loading.dismissAll();
+      }
+    );
+  }
+
+  async checkOTPAndIDLogin(sname) {
+    let alert = await this.alertCtrl.create({
+      header: this.enter_admission_number + sname,
+      //header: "Enter Date of Birth in dd/mm/yyyy format for "+sname,
+      inputs: [
+        {
+          name: 'OTP',
+
+          //type: 'password'
+          type: 'date',
+        },
+      ],
+      buttons: [
+        {
+          text: this.cancel,
+          role: 'cancel',
+          handler: (data) => {
+            console.log('Cancel clicked');
+          },
+        },
+        {
+          text: this.validate,
+          handler: (data) => {
+            this.sendOTPandID(data, sname);
+            console.log(data);
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+  updateFireBaseID() {
+    let fireBaseIDValues = this.storage.get('fireBaseID');
+    let sendingValue = {
+      firebase_id: fireBaseIDValues,
+      mobile_no: this.mobilNumber,
+    };
+    this.authservice.post('updateFirebaseId', sendingValue).subscribe(
+      (result: any) => {
+        let fireBaseResponse = result;
+        this.storeFirBaseStatus = fireBaseResponse;
+        console.log(
+          'FireBase ID Send Response Data',
+          this.storeFirBaseStatus.status
+        );
+        if (this.storeFirBaseStatus.status) {
+          this.sendMobStudentDetailID();
+        } else {
+          this.loading.dismissAll();
+          this.openalert('FIRE BASE ALERT', this.storeFirBaseStatus.data);
+        }
+      },
+      (err) => {
+        this.loading.dismissAll();
+        //Connection failed message
+      }
+    );
+  }
+
+  async openalert(message, title = 'ALERT') {
+    let alert = await this.alertCtrl.create({
+      header: title,
+      message: message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+
+  sendOTPandID(data, sname) {
+    this.loading.present();
+    let sendingValue = { id: this.myData.id, otp: data.OTP };
+    this.authservice.post('mobileInstallerVerify', sendingValue).subscribe(
+      (result) => {
+        this.getLoginValue = result;
+        console.log('response Data', this.getLoginValue);
+        this.loading.dismissAll();
+        if (this.getLoginValue.status == true) {
+          this.updateFireBaseID();
+        } else {
+          // Create
+          this.show(result['message'], sname);
+        }
+      },
+      (err) => {
+        this.loading.dismissAll();
+        //Connection failed message
+      }
+    );
+  }
+
+  sendMobStudentDetailID() {
+    let mobileDetailsID = { id: this.myData.id, ver: this.app_versionCode };
+    this.authservice.post('getMobStudentDetail', mobileDetailsID).subscribe(
+      (result) => {
+        let storeStudentDetail = result;
+        this.getStudentDetails = storeStudentDetail;
+        if (this.getStudentDetails.status == true) {
+          this.getimage(0);
+        } else {
+          this.loading.dismissAll();
+        }
+      },
+      (err) => {
+        this.loading.dismissAll();
+        //Connection failed message
+      }
+    );
+  }
+
+  getimage(i) {
+    console.log(this.getStudentDetails.data.length);
+    console.log(i);
+    if (i > this.getStudentDetails.data.length - 1) {
+      this.storage.addjson('studentDetail', this.getStudentDetails.data);
+      console.log(
+        'MOBILE ID ---------------------Send Response Data',
+        this.getStudentDetails
+      );
+      this.dataservice.changeMenustatus(true);
+      this.storage.addjson('flashmsg', { Discription: '', event_image: '' });
+      this.loading.dismissAll();
+      this.router.navigate(['']);
+    } else {
+      console.log(this.getStudentDetails.data[i]);
+      if (this.getStudentDetails.data[i]['ADNO'] != undefined) {
+        this.authservice
+          .post('getMobStudentPhoto', {
+            adno: this.getStudentDetails.data[i]['ADNO'],
+          })
+          .subscribe(
+            (result) => {
+              console.log(result);
+              if (result['status']) {
+                if (result['data'] != 'data:image/jpg;base64,') {
+                  this.storage.add(
+                    this.getStudentDetails.data[i]['ADNO'] + 'img',
+                    result['data']
+                  );
+                  // this.getStudentDetails.data[i]["stu_img"] = result['data']
+                }
+                this.getimage(i + 1);
+              }
+            },
+            (err) => {
+              this.loading.dismissAll();
+            }
+          );
+      } else {
+        this.getimage(i + 1);
+      }
+    }
+  }
+
+  async show(msg, sname) {
+    let alert = await this.alertCtrl.create({
+      header: msg,
+      buttons: [
+        {
+          text: 'Retry!',
+          role: 'cancel',
+          handler: (data) => {
+            console.log('Cancel clicked');
+            this.checkOTPAndIDLogin(sname);
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+}

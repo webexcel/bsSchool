@@ -1,0 +1,161 @@
+<ion-header [translucent]="true">
+  <ion-toolbar *ngIf="presentView == 'main'">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Knowledge Base</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="presentView == 'options'">
+    <ion-buttons slot="start">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeView('options')">Back</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="presentView == 'subject'">
+    <ion-buttons slot="start">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeView('subject')">Back</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="presentView == 'topic'">
+    <ion-buttons slot="start">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeView('topic')">Back</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="presentView == 'data'">
+    <ion-buttons slot="start">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeView('data')">Back</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container" *ngIf="presentView == 'main'">
+    <div class="item1" *ngFor="let item of studentList" (click)="getStudentClassDetails(item)">
+      <img src="../../assets/imgs/speakers/folder-2.jpeg" />
+      <ion-label>{{item.NAME}}</ion-label>
+    </div>
+  </div>
+
+  <div *ngIf="presentView == 'data'">
+    <ion-card *ngIf="allKBRecords.length == 0" style="height: 40px; background-color: #ff6565; color: white;">
+      <div style="text-align: center; padding-top: 2.5%;">
+        No Data Available!!
+      </div>
+    </ion-card>
+    <ion-card *ngFor="let rec of allKBRecords; let i = index">
+
+
+      <ion-card-header style="padding: 5px 10px;">
+        <div style="display: flex; justify-content: space-between; width: 90%;">
+          <span style="color: #4168C9;">Staff ID : {{rec.staffId}} ({{rec.class}})</span>
+          <span style="color: #0235B7;">{{rec.subject}}</span>
+          <span style="color: #FF7C02;">{{formatDate(rec.baseDate)}}</span>
+        </div>
+      </ion-card-header>
+      <ion-card-content style="padding: 5px 10px;">
+        <div>
+          <span style="color: #ff00aa;">Topic : {{rec.topic}}</span>
+        </div>
+        <!-- <div>
+          <span style="color: #269201;">Shared With : {{rec.shareWith}}</span>
+        </div> -->
+        <div *ngIf="rec.fileName.length > 0">
+          <img alt="" [src]="rec.filePath" class="w-100" *ngIf="checkimage(rec.filePath)" />
+
+          <div *ngIf="checkmp4(rec)">
+            <div *ngIf="rec.thumbnailBase64Image" class="thumbnail-container" (click)="loadVideo(rec)">
+              <img [src]="rec.thumbnail" alt="Thumbnail" class="thumbnail_img" />
+              <div class="play-icon-container">
+                <ion-icon name="play" class="play-icon"></ion-icon>
+              </div>
+            </div>
+
+            <video *ngIf="!rec.thumbnailBase64Image && rec.videoClicked" [src]="rec.filePath" style="width: 100%"
+              class="video-player" controls></video>
+          </div>
+
+          <div class="row w-100 align-items-center m-0 p-0" *ngIf="checkpdf(rec.filePath)">
+            <div class="col-12">
+              {{ getfilename(rec.filePath) }}
+            </div>
+            <div class="col-12">
+              <button type="button" class="btn btn-primary m-0 px-0" (click)="authservice.open(rec.filePath)">
+                <img class="logo_img" src="../../assets/imgs/speakers/pdf.png" />
+                Download
+              </button>
+            </div>
+          </div>
+
+          <div class="row w-100 align-items-center m-0 p-0" *ngIf="checkxls(rec.filePath)">
+            <div class="col-12">
+              {{ getfilename(rec.filePath) }}
+            </div>
+            <div class="col-12">
+              <button type="button" class="btn btn-primary m-0 px-0" (click)="authservice.open(rec.filePath)">
+                <img class="logo_img" src="../../assets/imgs/speakers/xls.png" />
+                Download
+              </button>
+            </div>
+          </div>
+
+          <div class="row w-100 align-items-center m-0 p-0" *ngIf="checkdoc(rec.filePath)">
+            <div class="col-12">
+              {{ getfilename(rec.filePath) }}
+            </div>
+            <div class="col-12">
+              <button type="button" class="btn btn-primary m-0 px-0" (click)="authservice.open(rec.filePath)">
+                <img class="logo_img" src="../../assets/imgs/speakers/doc.png" />
+                Download
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="checkmp3(rec.filePath)">
+            <audio controls controlsList="noplaybackrate nodownload" class="w-100">
+              <source src="{{ rec.filePath }}" type="audio/mpeg" />
+            </audio>
+          </div>
+        </div>
+        <div>
+          <span>Description : {{rec.description}}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="currentSize < totalSize">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+</ion-content>
