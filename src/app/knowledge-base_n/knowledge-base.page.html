@@ -1,0 +1,464 @@
+<ion-header [translucent]="true">
+  <ion-toolbar *ngIf="presentView == 'main' && subView == 'class'">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Knowledge Base</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="presentView == 'main' && subView == 'subject'">
+    <ion-title>> {{classData.name}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeView('subject')">Back</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="presentView == 'main' && subView == 'topic'">
+    <ion-title>> {{classData.name}} > {{subjectData.name}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeView('topic')">Back</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="presentView == 'main' && subView == 'options'">
+    <ion-title>> {{classData.name}} > {{subjectData.name}} > {{topicData.topic}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeView('options')">Back</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="presentView == 'main' && subView == 'data'">
+    <ion-title>> {{classData.name}} > {{subjectData.name}} > {{topicData.topic}} > {{detailsData.name}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeView('data')">Back</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="presentView == 'addForm'">
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveMessage('add')">Submit</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="presentView == 'editForm'">
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveMessage('edit')">Update</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="presentView == 'share'">
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="shareMessage()">Share</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="presentView == 'main'">
+  <div class="container" *ngIf="subView == 'class'">
+    <div class="item1" *ngFor="let item of classList" (click)="getClassDetails(item)">
+      <img src="../../assets/imgs/speakers/folder.png" />
+      <ion-label>{{item.name}}</ion-label>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="subView == 'subject'">
+    <div class="item1" *ngFor="let item of subList" (click)="getSubjectDetails(item)">
+      <img src="../../assets/imgs/speakers/folder.png" />
+      <ion-label>{{item.name}}</ion-label>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="subView == 'topic'">
+    <div class="item1" *ngFor="let item of topicOptionList" (click)="getTopicDetails(item)">
+      <img src="../../assets/imgs/speakers/folder.png" />
+      <ion-label>{{item.topic}}</ion-label>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="subView == 'options'">
+    <div class="item1" *ngFor="let item of optionList" (click)="getOptionDetails(item)">
+      <img src="../../assets/imgs/speakers/folder.png" />
+      <ion-label>{{item.name}}</ion-label>
+    </div>
+  </div>
+
+  <div *ngIf="subView == 'data'">
+    <ion-card *ngIf="allKBRecords.length == 0" style="height: 40px; background-color: #ff6565; color: white;">
+      <div style="text-align: center; padding-top: 2.5%;">
+        No Data Available!!
+      </div>
+    </ion-card>
+    <ion-card *ngFor="let rec of allKBRecords; let i = index">
+      <ion-modal [isOpen]="rec.isOptionsModalOpen" (willDismiss)="closeOptionsModal($event, rec.index)"
+        [initialBreakpoint]="0.25" [breakpoints]="[0, 0.25, 0.5, 0.75]" animated="true">
+        <ng-template>
+          <ion-content class="ion-padding">
+            <ion-button expand="full" (click)="editAction(rec.index)">Edit</ion-button>
+            <ion-button expand="full" (click)="deleteAction(rec.index)">Delete</ion-button>
+            <ion-button expand="full" (click)="shareAction(rec.index)">Share</ion-button>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
+      <ion-card-header style="padding: 5px 10px;">
+        <div style="display: flex; justify-content: space-between; width: 90%;">
+          <span style="color: #4168C9;">Staff ID : {{rec.staffId}} ({{rec.class}})</span>
+          <span style="color: #0235B7;">{{rec.subject}}</span>
+          <span style="color: #FF7C02;">{{formatDate(rec.baseDate)}}</span>
+        </div>
+
+        <span style="position: absolute; right: 10px;" (click)="presentButtons(rec.index)">
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </span>
+      </ion-card-header>
+      <ion-card-content style="padding: 5px 10px;">
+        <div>
+          <span style="color: #ff00aa;">Topic : {{rec.topic}}</span>
+        </div>
+        <div>
+          <span style="color: #269201;">Shared With : {{rec.shareWith}}</span>
+        </div>
+        <div>
+          <span>Description : {{rec.description}}</span>
+        </div>
+        <div *ngIf="rec.fileName.length > 0">
+          <img alt="" [src]="rec.filePath" class="w-100" *ngIf="checkimage(rec.filePath)" />
+
+          <div *ngIf="checkmp4(rec)">
+            <div *ngIf="rec.thumbnailBase64Image" class="thumbnail-container" (click)="loadVideo(rec)">
+              <img [src]="rec.thumbnail" alt="Thumbnail" class="thumbnail_img" />
+              <div class="play-icon-container">
+                <ion-icon name="play" class="play-icon"></ion-icon>
+              </div>
+            </div>
+
+            <video *ngIf="!rec.thumbnailBase64Image && rec.videoClicked" [src]="rec.filePath" style="width: 100%"
+              class="video-player" controls></video>
+          </div>
+
+          <div class="row w-100 align-items-center m-0 p-0" *ngIf="checkpdf(rec.filePath)">
+            <div class="col-12">
+              {{ getfilename(rec.filePath) }}
+            </div>
+            <div class="col-12">
+              <button type="button" class="btn btn-primary m-0 px-0" (click)="authservice.open(rec.filePath)">
+                <img class="logo_img" src="../../assets/imgs/speakers/pdf.png" />
+                Download
+              </button>
+            </div>
+          </div>
+
+          <div class="row w-100 align-items-center m-0 p-0" *ngIf="checkxls(rec.filePath)">
+            <div class="col-12">
+              {{ getfilename(rec.filePath) }}
+            </div>
+            <div class="col-12">
+              <button type="button" class="btn btn-primary m-0 px-0" (click)="authservice.open(rec.filePath)">
+                <img class="logo_img" src="../../assets/imgs/speakers/xls.png" />
+                Download
+              </button>
+            </div>
+          </div>
+
+          <div class="row w-100 align-items-center m-0 p-0" *ngIf="checkdoc(rec.filePath)">
+            <div class="col-12">
+              {{ getfilename(rec.filePath) }}
+            </div>
+            <div class="col-12">
+              <button type="button" class="btn btn-primary m-0 px-0" (click)="authservice.open(rec.filePath)">
+                <img class="logo_img" src="../../assets/imgs/speakers/doc.png" />
+                Download
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="checkmp3(rec.filePath)">
+            <audio controls controlsList="noplaybackrate nodownload" class="w-100">
+              <source src="{{ rec.filePath }}" type="audio/mpeg" />
+            </audio>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="currentSize < totalSize">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" tappable>
+    <ion-fab-button (click)="newMessage()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<ion-content [fullscreen]="true" *ngIf="presentView == 'addForm'">
+  <div style="padding: 10px 10px 5px 10px;">
+    <ion-buttons style="display: flex; justify-content: end;">
+      <ion-button (click)="addTopic()" style="background-color: #5886FE; border-radius: 10px; color: white;">
+        <ion-icon name="add" style="margin-right: 5px;"></ion-icon>Add Topic</ion-button>
+    </ion-buttons>
+  </div>
+
+  <ion-modal [isOpen]="isPickerOpen" trigger="open-modal" animated="true">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">cancel</ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">confirm</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div style="padding: 15px;">
+          <div style="display: flex; justify-content: space-between;">
+            <div style="margin-left: 5px; margin-right: 5px;">
+              <ion-label style="display: block; color: #5886FE;">Select Group</ion-label>
+
+              <ion-input readonly [placeholder]="classTopName"
+                style="border: 1px solid #909090; border-radius: 5px; --padding-start: 5px; min-height: 40px; margin-top: 5px; margin-bottom: 5px;"
+                (click)="openOptions(classList, classTopValue, 'ClassTop', false)">
+                <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+              </ion-input>
+              <ion-input hidden="true"></ion-input>
+            </div>
+
+            <div style="margin-left: 5px; margin-right: 5px;">
+              <ion-label style="color: #5886FE;">Select Subject</ion-label>
+
+              <ion-input readonly [placeholder]="subjectTopName"
+                style="border: 1px solid #909090; border-radius: 5px; --padding-start: 5px; min-height: 40px; margin-top: 5px; margin-bottom: 5px;"
+                (click)="openOptions(subList, subjectTopValue, 'SubjectTop', false)">
+                <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+              </ion-input>
+              <ion-input hidden="true"></ion-input>
+            </div>
+          </div>
+          <div style="margin-top: 10px;">
+            <ion-label style="display: block; color: #5886FE;">Topic</ion-label>
+            <ion-textarea [(ngModel)]="topicText" placeholder="Enter Topic" autoGrow="true"
+              style="border: 1px solid #909090; border-radius: 5px; --padding-start: 5px; --padding-top: 5px; --padding-bottom: 5px; --padding-end: 5px; min-height: 40px; margin-top: 5px; margin-bottom: 5px;"></ion-textarea>
+          </div>
+          <ion-buttons style="display: flex; justify-content: center; margin-top: 15px;">
+            <ion-button (click)="confirm()"
+              style="background-color: #0235B7; color: white; border-radius: 10px; width: 50%;">Save</ion-button>
+          </ion-buttons>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <div style="padding: 10px;">
+    <div style="display: flex; justify-content: space-between;">
+      <div style="margin-left: 5px; margin-right: 5px;">
+        <ion-label style="display: block; color: #5886FE;">Select Class</ion-label>
+
+        <ion-input readonly [placeholder]="ClassName"
+          style="border: 1px solid #909090; border-radius: 5px; --padding-start: 5px; min-height: 40px; margin-top: 5px; margin-bottom: 5px;"
+          (click)="openOptions(classList, class, 'Class', false)">
+          <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+        </ion-input>
+        <ion-input hidden="true"></ion-input>
+      </div>
+
+      <div style="margin-left: 5px; margin-right: 5px;">
+        <ion-label style="color: #5886FE;">Select Subject</ion-label>
+
+        <ion-input readonly [placeholder]="SubjectName"
+          style="border: 1px solid #909090; border-radius: 5px; --padding-start: 5px; min-height: 40px; margin-top: 5px; margin-bottom: 5px;"
+          (click)="openOptions(subList, subject, 'Subject', false)">
+          <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+        </ion-input>
+        <ion-input hidden="true"></ion-input>
+      </div>
+    </div>
+
+    <div style="margin-top: 12px; color: #5886FE;">Select Topic/Chapter</div>
+
+    <ion-item class="dropdown_select" style="margin: 0px" [disabled]="enableTopic">
+      <ion-input readonly [placeholder]="TopicName"
+        (click)="openOptions(topicList, topic, 'Topic', false, ['id', 'topic'])">
+        <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+      </ion-input>
+      <ion-input hidden="true"></ion-input>
+    </ion-item>
+
+    <div style="margin-top: 12px; color: #5886FE;">Description</div>
+    <ion-item lines="full" class="messageArea" style="min-height: 95px">
+      <ion-textarea type="text" name="message" [(ngModel)]="description" #message="ngModel" style="min-height: 95px"
+        autoGrow="true">
+      </ion-textarea>
+    </ion-item>
+
+    <div class="row w-100 pt-3 m-0 button-container">
+      <div class="attach" *ngIf="thumbData.filename.length === 0 && !recording" style="flex: 0 0 150px">
+        <img alt="" style="width: 12px; height: 22px" src="../../assets/imgs/speakers/attach.svg" />
+        <span style="color: #fff; margin-left: 8px" (click)="open()">Attach Files</span>
+      </div>
+      <div class="attach1" [ngClass]="{'full-width': recording}" *ngIf="thumbData.filename.length === 0">
+        <img alt="" style="width: 12px; height: 22px" src="../../assets/imgs/speakers/mic.svg"
+          (click)="onStartRecording()" *ngIf="!recording" />
+        <span style="color: #fff; margin-left: 8px" *ngIf="!recording" (click)="onStartRecording()">
+          Record Audio</span>
+
+        <span style="color: #ff0000; width: 296px;" *ngIf="recording" (click)="onStopRecording()">
+          <ion-icon name="stop" style="margin-right: 5px;"></ion-icon>Stop Recording</span>
+        <span *ngIf="recording" (click)="onStopRecording()"> - {{
+          formatTime(runningTime)
+          }}</span>
+      </div>
+      <div class="col-10" *ngIf="
+      thumbData.filename.length > 0 && thumbData.type !== 'mp3' && thumbData.type !== 'wav'
+          ">
+        {{ thumbData.filename }}
+      </div>
+      <div class="col-10" *ngIf="
+      thumbData.filename.length > 0 && (thumbData.type === 'mp3' || thumbData.type === 'wav')
+          ">
+        <audio controls controlsList="noplaybackrate nodownload" class="w-100">
+          <source [src]="audioData.base64" type="audio/mpeg" />
+        </audio>
+      </div>
+
+      <div class="col-2" *ngIf="thumbData.filename.length > 0">
+        <button type="button" class="btn btn-danger" (click)="deletefile()">
+          <ion-icon [ios]="'trash-sharp'" [md]="'trash-sharp'"></ion-icon>
+        </button>
+      </div>
+
+      <div class="col-12 text-danger" *ngIf="error">
+        only allow jpg, jpeg, png, pdf, mp3, xls, xlsx, wav.
+      </div>
+    </div>
+    <ion-buttons style="display: flex; justify-content: center; margin-top: 25px;">
+      <ion-button (click)="saveMessage('add')"
+        style="background-color: #4168C9; border-radius: 5px; color: white; width: 40%;"><ion-icon name="send"
+          style="margin-right: 5px;"></ion-icon>Submit</ion-button>
+    </ion-buttons>
+  </div>
+</ion-content>
+
+<ion-content [fullscreen]="true" *ngIf="presentView == 'editForm'">
+  <div style="padding: 10px;">
+    <div style="display: flex; justify-content: space-between;">
+      <div style="margin-left: 5px; margin-right: 5px;">
+        <ion-label style="display: block; color: #5886FE;">Select Class</ion-label>
+
+        <ion-input readonly [placeholder]="ClassName"
+          style="border: 1px solid #909090; border-radius: 5px; --padding-start: 5px; min-height: 40px; margin-top: 5px; margin-bottom: 5px;"
+          (click)="openOptions(classList, class, 'Class', false)">
+          <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+        </ion-input>
+        <ion-input hidden="true"></ion-input>
+      </div>
+
+      <div style="margin-left: 5px; margin-right: 5px;">
+        <ion-label style="color: #5886FE;">Select Subject</ion-label>
+
+        <ion-input readonly [placeholder]="SubjectName"
+          style="border: 1px solid #909090; border-radius: 5px; --padding-start: 5px; min-height: 40px; margin-top: 5px; margin-bottom: 5px;"
+          (click)="openOptions(subList, subject, 'Subject', false)">
+          <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+        </ion-input>
+        <ion-input hidden="true"></ion-input>
+      </div>
+    </div>
+
+    <div style="margin-top: 12px; color: #5886FE;">Select Topic/Chapter</div>
+
+    <ion-item class="dropdown_select" style="margin: 0px" [disabled]="enableTopic">
+      <ion-input readonly [placeholder]="TopicName"
+        (click)="openOptions(topicList, topic, 'Topic', false, ['id', 'topic'])">
+        <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+      </ion-input>
+      <ion-input hidden="true"></ion-input>
+    </ion-item>
+
+    <div style="margin-top: 12px; color: #5886FE;">Description</div>
+    <ion-item lines="full" class="messageArea" style="min-height: 95px">
+      <ion-textarea type="text" name="message" [(ngModel)]="description" #message="ngModel" style="min-height: 95px"
+        autoGrow="true">
+      </ion-textarea>
+    </ion-item>
+
+    <div class="row w-100 pt-3 m-0 button-container">
+      <div class="attach" *ngIf="thumbData.filename.length === 0 && !recording" style="flex: 0 0 150px">
+        <img alt="" style="width: 12px; height: 22px" src="../../assets/imgs/speakers/attach.svg" />
+        <span style="color: #fff; margin-left: 8px" (click)="open()">Attach Files</span>
+      </div>
+      <div class="attach1" [ngClass]="{'full-width': recording}" *ngIf="thumbData.filename.length === 0">
+        <img alt="" style="width: 12px; height: 22px" src="../../assets/imgs/speakers/mic.svg"
+          (click)="onStartRecording()" *ngIf="!recording" />
+        <span style="color: #fff; margin-left: 8px" *ngIf="!recording" (click)="onStartRecording()">
+          Record Audio</span>
+
+        <span style="color: #ff0000; width: 296px;" *ngIf="recording" (click)="onStopRecording()">
+          <ion-icon name="stop" style="margin-right: 5px;"></ion-icon>Stop Recording</span>
+        <span *ngIf="recording" (click)="onStopRecording()"> - {{
+          formatTime(runningTime)
+          }}</span>
+      </div>
+      <div class="col-10" *ngIf="
+      thumbData.filename.length > 0 && thumbData.type !== 'mp3' && thumbData.type !== 'wav'
+          ">
+        {{ thumbData.filename }}
+      </div>
+      <div class="col-10" *ngIf="
+      thumbData.filename.length > 0 && (thumbData.type === 'mp3' || thumbData.type === 'wav')
+          ">
+        <audio controls controlsList="noplaybackrate nodownload" class="w-100">
+          <source [src]="audioData.base64" type="audio/mpeg" />
+        </audio>
+      </div>
+
+      <div class="col-2" *ngIf="thumbData.filename.length > 0">
+        <button type="button" class="btn btn-danger" (click)="deletefile()">
+          <ion-icon [ios]="'trash-sharp'" [md]="'trash-sharp'"></ion-icon>
+        </button>
+      </div>
+
+      <div class="col-12 text-danger" *ngIf="error">
+        only allow jpg, jpeg, png, pdf, mp3, xls, xlsx, wav.
+      </div>
+    </div>
+    <ion-buttons style="display: flex; justify-content: center; margin-top: 25px;">
+      <ion-button (click)="saveMessage('edit')"
+        style="background-color: #4168C9; border-radius: 5px; color: white; width: 40%;"><ion-icon name="send"
+          style="margin-right: 5px;"></ion-icon>Update</ion-button>
+    </ion-buttons>
+  </div>
+</ion-content>
+
+<ion-content [fullscreen]="true" *ngIf="presentView == 'share'">
+  <div style="padding: 10px;">
+    <div style="margin-left: 5px; margin-right: 5px;">
+      <ion-label style="display: block; color: #5886FE;">Select Class</ion-label>
+
+      <ion-input readonly [placeholder]="ClassShareName"
+        style="border: 1px solid #909090; border-radius: 5px; --padding-start: 5px; min-height: 40px; margin-top: 5px; margin-bottom: 5px;"
+        (click)="openOptions(classList, classShare, 'ClassMulti', true)">
+        <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+      </ion-input>
+      <ion-input hidden="true"></ion-input>
+    </div>
+
+    <ion-buttons style="display: flex; justify-content: center;">
+      <ion-button style="background-color: #4168C9; color: white; width: 40%;"
+        (click)="shareMessage()">Share</ion-button>
+    </ion-buttons>
+  </div>
+</ion-content>

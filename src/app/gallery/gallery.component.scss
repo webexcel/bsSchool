@@ -1,0 +1,44 @@
+$colors: #4682B4 !important;
+.gallery {
+  margin-left: 16px !important;
+  margin-right: 16px !important;
+  margin-top: 16px !important;
+
+  .card {
+    border: solid 2px $colors;
+    border-bottom: solid 5px $colors;
+    margin-bottom: 16px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+  }
+  .datewidth {
+    margin: 10px;
+    width: 20%;
+    text-align: center;
+    border-right: solid 1px gray;
+    float: left;
+    color: red;
+  }
+
+  .titlewidth {
+    margin: 10px;
+    float: left;
+    font-size: 16px;
+    padding-top: 5px;
+    font-weight: bold;
+  }
+
+  .fon18 {
+    font-size: 21px;
+    font-weight: bold;
+  }
+
+  .clrflt {
+    clear: both;
+    padding: 15px;
+    background-color: rgb(240, 240, 240);
+    line-height: 21px;
+    border-bottom-left-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+  }
+}

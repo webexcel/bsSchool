@@ -1,0 +1,27 @@
+table {
+  border-collapse: border;
+  width: 100%;
+  border: 2px solid black;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+  border: 2px solid black;
+}
+
+tr:nth-child(even) {
+  background-color: #e9ebeb;
+}
+.my_class1 {
+  background-color: rgb(251, 215, 215);
+}
+.my_class2 {
+  background-color: rgb(255, 255, 255);
+}
+
+.break-after-slash::after {
+  content: "\A";
+  white-space: pre;
+}

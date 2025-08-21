@@ -1,0 +1,39 @@
+$colors: #4682B4 !important;
+.event {
+  .card {
+    border: solid 1px $colors;
+    border-bottom: solid 5px $colors;
+  }
+
+  .titlewidth {
+    float: left;
+    font-size: 16px;
+    padding-top: 5px;
+    font-weight: bold;
+    width: 100%;
+  }
+
+  .fon18 {
+    font-size: 21px;
+    font-weight: bold;
+  }
+}
+
+ion-card {
+  margin-left: 20px !important;
+  margin-right: 20px !important;
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+  //   padding: 20px !important;
+}
+
+ion-segment {
+  background-color: #fff !important;
+  border-bottom: 2px solid #4475de !important;
+}
+
+.card-cls {
+  //   margin: 10px;
+  //   padding: 10px;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}

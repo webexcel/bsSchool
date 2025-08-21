@@ -1,0 +1,21 @@
+<ion-content>
+  <!-- <pinch-zoom backgroundColor="rgba(0,0,0,0)"> -->
+  <div style="height: 100% !important; width: 100%; margin-top: 25%;" [ngStyle]="{'height.px': screenHeight}">
+    <div class="bg-style" scrollY="false">
+      <ion-icon [ios]="'close-circle-sharp'" [md]="'close-circle-sharp'" (click)="close()"></ion-icon>
+      <swiper-container #swiper class="image-slider" [loop]="true" slidesPerView="1" [pager]="true" autoplay="5000"
+        [pagination]="true" zoom="true">
+        <swiper-slide *ngFor="let img of subgalleryImgView" class="swiper-slide">
+          <div class="swiper-zoom-container">
+            <img src="{{ img.base64 }}" class="thumb-img" imageViewer alt="" *ngIf="img.base64.length > 0" />
+            <!-- <img src="{{ img.GalPath }}" class="thumb-img" imageViewer alt="" *ngIf="img.base64.length === 0" /> -->
+            <img
+              src="{{ img.GalPath.startsWith('http') ? img.GalPath: imageurl + '/' + img.GalCatID + '/' + img.GalPath }}"
+              class="thumb-img" imageViewer alt="" *ngIf="img.base64.length === 0" />
+          </div>
+        </swiper-slide>
+      </swiper-container>
+    </div>
+  </div>
+  <!-- </pinch-zoom> -->
+</ion-content>

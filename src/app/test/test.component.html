@@ -1,0 +1,190 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Test</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+    <ion-toolbar class="p-0">
+      <ion-buttons slot="start">
+        <ion-menu-button>
+          <ion-icon class="text-white" [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+        </ion-menu-button>
+      </ion-buttons>
+      <ion-title>Test</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="test">
+    <div class="card-body card_body">
+      <form name="form" (ngSubmit)="f.form.valid && onSubmit(f)" #f="ngForm" novalidate>
+        <div style="margin-top: 12px">From Date</div>
+        <ion-item lines="full" class="dropdown" style="margin: 0px">
+          <ion-label id="open-modal-from" class="selected-date" *ngIf="select_datas.s_date">
+            <span style="float: left">
+              {{ formatDate(select_datas.s_date) }}</span>
+
+            <span style="float: right !important">
+              <img style="height: 6px; width: 10px; margin-right: 5px" src="../../assets/imgs/speakers/Polygon 4.png" />
+            </span>
+          </ion-label>
+
+          <ion-modal #modal trigger="open-modal-from" (willDismiss)="onWillDismiss($event, 'first')"
+            [initialBreakpoint]="0.5" [breakpoints]="[0, 0.25, 0.5, 0.75]" animated="true">
+            <ng-template>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-buttons slot="start">
+                    <ion-button (click)="cancel_date()">{{
+                      "cancel" | translate
+                      }}</ion-button>
+                  </ion-buttons>
+                  <ion-title>{{ "select_date" | translate }}</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button (click)="confirm_date()" [strong]="true">{{
+                      "confirm" | translate
+                      }}</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="ion-padding">
+                <ion-datetime name="dob" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"
+                  [(ngModel)]="select_datas.s_date" #dob="ngModel" presentation="date" mode="md" #datetime
+                  (ionChange)="showHideDatePicker()" required>
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+
+        <div style="margin-top: 12px">To Date</div>
+        <ion-item lines="full" class="dropdown" style="margin: 0px">
+          <ion-label id="open-modal-to" class="selected-date" *ngIf="select_datas.e_date">
+            <span style="float: left">
+              {{ formatDate(select_datas.e_date) }}</span>
+
+            <span style="float: right !important">
+              <img style="height: 6px; width: 10px; margin-right: 5px" src="../../assets/imgs/speakers/Polygon 4.png" />
+            </span>
+          </ion-label>
+
+          <ion-modal #modal1 trigger="open-modal-to" (willDismiss)="onWillDismiss1($event, 'first')"
+            [initialBreakpoint]="0.5" [breakpoints]="[0, 0.25, 0.5, 0.75]" animated="true">
+            <ng-template>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-buttons slot="start">
+                    <ion-button (click)="cancel_date()">{{
+                      "cancel" | translate
+                      }}</ion-button>
+                  </ion-buttons>
+                  <ion-title>{{ "select_date" | translate }}</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button (click)="confirm_date1()" [strong]="true">{{
+                      "confirm" | translate
+                      }}</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="ion-padding">
+                <ion-datetime name="dob" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"
+                  [(ngModel)]="select_datas.e_date" #dob="ngModel" presentation="date" mode="md" #datetime
+                  (ionChange)="showHideDatePicker1()" required>
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+
+        <div style="margin-top: 12px">Select Session</div>
+        <ion-item class="dropdown" style="margin: 0px">
+          <ion-label>{{ "Session" | translate }}</ion-label>
+          <ionic-selectable #portComponent name="session" item-content [(ngModel)]="select_datas.selectedSessions"
+            [hasVirtualScroll]="true" [items]="select_sessions" [canSearch]="true" #session="ngModel" required>
+            <ng-template ionicSelectableValueTemplate let-item="item">
+              <div class="ionic-selectable-value-item">
+                {{ item }}
+              </div>
+            </ng-template>
+            <ng-template ionicSelectableCloseButtonTemplate>
+              <ion-icon [md]="'close-circle'" [ios]="'close-circle'" style="font-size: 24px"></ion-icon>
+            </ng-template>
+          </ionic-selectable>
+        </ion-item>
+
+        <div style="margin-top: 25px">Enter Reason Here</div>
+        <ion-item lines="full" class="messageArea" style="height: 95px">
+          <ion-textarea type="text" name="message" [(ngModel)]="select_datas.message" #message="ngModel">
+            <!-- [required]="select_datas.filename.length === 0" -->
+          </ion-textarea>
+        </ion-item>
+
+        <div class="p-2 text-right">
+          <button type="submit" class="button" style="width: 100%; height: 35px; margin-top: 20px;"
+            (click)="getLeaveStatus()">
+            <!-- (click)="getLeaveStatus([{ ADNO }])"> -->
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- <div class="cardlist mb-3" *ngFor="let d of draftLeaveRequest">
+      <div class="card-header py-1">
+        <div class="row align-items-center">
+          <div class="col-2">{{ d.fdate }} <br> {{ d.tdate }}</div>
+          <div class="col-8">{{ d.reson}}</div>
+          <div class="col-2">{{d.leaveStatus}}</div>
+        </div>
+      </div>
+    </div> -->
+
+    <div style="margin-top: 10px;" class="m-3">
+      <div>
+        <div class="dateHead">
+          Leave Requests
+        </div>
+        <table class="table table-bordered">
+          <tbody *ngFor="let d of draftLeaveRequest; let i = index" style="margin: 10px;">
+            <tr>
+              <td width="20%">
+                <div class="txtCenter topBg">{{ d.fdate }}</div>
+                <div class="txtCenter">{{ d.tdate }}</div>
+              </td>
+              <td width="60%" class="reason1">
+                <span *ngIf="d.reson">
+                  <div class="reason">{{ d.reson}}</div>
+                </span>
+              </td>
+              <td width="20%">
+                <span *ngIf="d.reson">
+                  <div>{{d.leaveStatus}}</div>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+  </div>
+
+</ion-content>

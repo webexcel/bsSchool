@@ -1,0 +1,40 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Annual Report Card</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="background-color: #f8f9fa !important">
+  <pinch-zoom backgroundColor="rgba(0,0,0,0)">
+    <div style="height: 100% !important; width: 100%">
+      <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+        <ion-toolbar class="p-0">
+          <ion-buttons slot="start">
+            <ion-menu-button><ion-icon class="text-white" [ios]="'menu-sharp'"
+                [md]="'men  u-sharp'"></ion-icon></ion-menu-button>
+          </ion-buttons>
+          <ion-title>Annual Report Card</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <div class="annual">
+        <app-segment (item)="selected($event)"></app-segment>
+        <!-- <iframe width="100" height="100" src="{{pdf}}" type="application/pdf"></iframe> -->
+        <!-- <iframe width="500" height="600" [attr.src]="pdf" type="application/pdf"></iframe> -->
+        <iframe [src]="pdfData | pdf" frameBorder="0" scrolling="auto" width="100%" height="700"></iframe>
+        <!-- <p>{{pdfData}}</p> -->
+      </div>
+    </div>
+  </pinch-zoom>
+</ion-content>

@@ -1,0 +1,233 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'" class="menuIcon"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ "dashboard" | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button id="open-modal" (click)="get()">
+        <img class="img-thumbnail dash" src="../../assets/imgs/image.svg" />
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-modal trigger="open-modal" [isOpen]="profileDetails">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>My Profile</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeProfile()">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div>
+          <ion-label>Hello</ion-label>
+        </div>
+        <div class="modal_content" *ngFor="let item of profileData">
+          <div style="display: flex; align-items: center; margin-bottom: 20px;">
+            <ion-label style="font-weight: bold; color: #2c66ff; width: 120px;">Admission No:</ion-label>
+            <ion-label style="color: #555;">{{ item.ADMISSION_ID }}</ion-label>
+          </div>
+          <div style="display: flex; align-items: center; margin-bottom: 20px;">
+            <ion-label style="font-weight: bold; color: #2c66ff; width: 120px;">Student Name:</ion-label>
+            <ion-label style="color: #555;">{{ item.NAME }}</ion-label>
+          </div>
+          <div style="display: flex; align-items: center; margin-bottom: 20px;">
+            <ion-label style="font-weight: bold; color: #2c66ff; width: 120px;">Father's Name:</ion-label>
+            <ion-label style="color: #555;">{{ item.fname }}</ion-label>
+          </div>
+          <div style="display: flex; align-items: center; margin-bottom: 20px;">
+            <ion-label style="font-weight: bold; color: #2c66ff; width: 120px;">Address:</ion-label>
+            <ion-label style="color: #555;">{{ item.address }}</ion-label>
+          </div>
+          <div style="display: flex; align-items: center; margin-bottom: 20px;">
+            <ion-label style="font-weight: bold; color: #2c66ff; width: 120px;">Contact No:</ion-label>
+            <ion-label style="color: #555;">{{ item.contact }}</ion-label>
+          </div>
+          <div style="display: flex; align-items: center; margin-bottom: 20px;">
+            <ion-label style="font-weight: bold; color: #2c66ff; width: 120px;">Date of Birth:</ion-label>
+            <ion-label style="color: #555;">{{ item.dob }}</ion-label>
+          </div>
+          <div style="display: flex; align-items: center; margin-bottom: 20px;">
+            <ion-label style="font-weight: bold; color: #2c66ff; width: 120px;">Blood Group:</ion-label>
+            <ion-label style="color: #555;">{{ item.bg }}</ion-label>
+          </div>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- <pinch-zoom [limit-zoom]=800 backgroundColor="rgba(0,0,0,0)" style="height: 100% !important"> -->
+  <div style="height: 100% !important; width: 100%">
+    <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+      <ion-toolbar class="p-0">
+        <ion-buttons slot="start">
+          <ion-menu-button>
+            <ion-icon class="text-white" [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+          </ion-menu-button>
+        </ion-buttons>
+        <ion-title>{{ "dashboard" | translate }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-card class="dashcard" *ngFor="let item of getStudentDetails; let i = index">
+      <ion-card-content class="dashcardContent">
+        <ion-grid>
+          <ion-row style="padding: 8px">
+            <ion-col size="3">
+              <img class="img-thumbnail dash" *ngIf="storage.get(item.ADNO + 'img')"
+                [src]="storage.get(item.ADNO + 'img')" />
+              <img class="img-thumbnail dash" *ngIf="!storage.get(item.ADNO + 'img')"
+                src="../../assets/imgs/student.png" />
+            </ion-col>
+            <ion-col size="9">
+              <p class="name">{{ item.NAME }}</p>
+
+              <ion-row class="IDSecRow">
+                <ion-col size="5">
+                  <p class="IDSection">Ad No : {{ item.ADNO }}</p>
+                </ion-col>
+                <ion-col size="7">
+                  <p class="IDSection">Class : {{ item.CLASSSEC }}</p>
+                </ion-col>
+              </ion-row>
+              <p class="contact">Contact No: {{ item.contact }}</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+      <ion-buttons *ngIf="item.feesPending" style="display: flex; justify-content: center;">
+        <ion-button (click)="redirectToFees()" class="zoom-animation"
+          style="background-color: #ff0000; border-radius: 20px; margin-bottom: 10px; font-size: 10px;">
+          Pay Pending Fees of {{item.balance}}
+        </ion-button>
+      </ion-buttons>
+    </ion-card>
+
+    <ion-grid>
+      <ion-row class="align-items-center">
+        <ion-col class="ion-text-center" size="4" *ngFor="let p of appPages; let i = index">
+          <div class="row" (click)="go(p.url)">
+            <div class="dash-icon">
+              <div class="badge" *ngIf="p.notifyCount > 0">
+                {{p.notifyCount}}
+              </div>
+              <img class="icon-img" [src]="p.icon" />
+            </div>
+            <div class="col-12">
+              <p class="iconTitle ion-text-center" [ngStyle]="{ color: p.borderColor }">
+                {{ p.title | translate }}
+              </p>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <!-- </pinch-zoom> -->
+</ion-content>
+
+<pinch-zoom backgroundColor="rgba(0,0,0,0)">
+  <div>
+    <ion-modal [isOpen]="isModal2Open" #modal [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation">
+      <!-- Latest message -->
+      <ng-template>
+        <div class="modal-header flash">
+          <ion-item lines="full">
+            <ion-row class="align-items-center" style="width: 100%">
+              <ion-col size="10">
+                <h4 class="modal-title pull-left" style="font-size: large;" (click)="go_circulars()">
+                  You Have {{ latestData.length }} Circulars
+                </h4>
+              </ion-col>
+              <ion-col size="2" class="ion-text-left">
+                <ion-button fill="clear" (click)="close()">
+                  <ion-icon name="close"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+        </div>
+      </ng-template>
+    </ion-modal>
+  </div>
+</pinch-zoom>
+<pinch-zoom backgroundColor="rgba(0,0,0,0)">
+
+
+  <div>
+    <ion-modal [isOpen]="isModalOpen2" #modal [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation">
+      <!-- *ngIf="flashData.length > 0 && flashData.length > flashindex"> -->
+      <ng-template>
+        <div class="modal-header">
+          <!-- *ngIf="flashData.length > 0 && flashData.length > flashindex"> -->
+          <ion-item lines="full">
+            <ion-row class="align-items-center" style="width: 100%">
+              <ion-col size="10">
+                <h3 class="ion-text-left">
+                  Happy Birthday! Have a Great Day
+                </h3>
+              </ion-col>
+              <ion-col size="2" class="ion-text-left">
+                <ion-button fill="clear" (click)="close2()">
+                  <ion-icon name="close"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+
+          <img src="../../assets/imgs/birthday.png" alt="" />
+
+
+        </div>
+      </ng-template>
+    </ion-modal>
+  </div>
+
+  <div>
+    <ion-modal [isOpen]="isModalOpen" #modal [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation"
+      *ngIf="flashData.length > 0 && flashData.length > flashindex">
+      <ng-template>
+        <div class="modal-header" *ngIf="flashData.length > 0 && flashData.length > flashindex">
+          <ion-item lines="full">
+            <ion-row class="align-items-center" style="width: 100%">
+              <ion-col size="10">
+                <h3 class="ion-text-left">
+                  {{ flashData[flashindex].Title }}
+                </h3>
+              </ion-col>
+              <ion-col size="2" class="ion-text-left">
+                <ion-button fill="clear" (click)="close()">
+                  <ion-icon name="close"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+
+          <div style="text-align: center;">
+            <img *ngIf="flashData[flashindex].event_image" [src]="flashData[flashindex].event_image" alt=""
+              [class.d-none]="flashData[flashindex].event_image.length == 0" style="max-width: 55%;" />
+          </div>
+
+          <div class="descript">
+            <pre *ngIf="flashData[flashindex].Discription" [innerHTML]="
+          authservice.linksAndMails(flashData[flashindex].Discription)
+        "></pre>
+
+          </div>
+        </div>
+      </ng-template>
+    </ion-modal>
+  </div>
+
+
+
+
+
+</pinch-zoom>

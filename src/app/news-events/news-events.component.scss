@@ -1,0 +1,141 @@
+$colors: #4682B4 !important;
+.news {
+  .card {
+    border: solid 1px $colors;
+    border-bottom: solid 5px $colors;
+  }
+  .datewidth {
+    margin: 10px;
+    width: 20%;
+    text-align: center;
+    border-right: solid 1px gray;
+    float: left;
+    color: red;
+  }
+  hr {
+    background-color: $colors;
+  }
+  .date {
+    padding: 5px;
+    font-size: 18px;
+    color: Red;
+    border: 1px solid $colors;
+  }
+  .text-right1 {
+    // display: flex;
+    float: right;
+  }
+  .month {
+    font-size: 18px;
+    padding: 5px;
+    color: #ffffff;
+    background-color: $colors;
+    border: 1px solid $colors;
+  }
+
+  .titlewidth {
+    margin: 10px;
+    float: left;
+    font-size: 16px;
+    padding-top: 5px;
+    font-weight: bold;
+  }
+
+  .fon18 {
+    font-size: 21px;
+    font-weight: bold;
+    // float: left;
+  }
+  .space-between {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px !important;
+  }
+  .description {
+    margin-top: 16px;
+  }
+
+  .clrflt {
+    clear: both;
+    padding: 15px;
+    background-color: rgb(240, 240, 240);
+    line-height: 21px;
+  }
+
+  button#print,
+  button#print * {
+    display: block !important;
+  }
+
+  button#download,
+  button#download * {
+    display: block !important;
+  }
+
+  #toolbarViewerMiddle {
+    display: none;
+  }
+
+  p {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+  }
+  .card-body {
+    padding: 0.8rem;
+  }
+}
+.card-cls {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+  border: 1px solid #4682B4 !important;
+  border-bottom: 5px solid #4682B4 !important;
+}
+.card-cls1 {
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+.custom-table th {
+  background-color: #4682B4 !important;
+  border-color: #fff !important;
+  color: #fff;
+  border-bottom-width: 2px;
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+  border: 1px solid #dee2e6;
+  padding: 0.75rem;
+  text-align: inherit;
+}
+.custom-table td {
+  border: 1px solid #ccc;
+  padding: 5px;
+  padding: 0.75rem;
+  vertical-align: top;
+  border-color: #d8d0d0 !important;
+  color: black;
+  border-bottom-width: 2px;
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+  border: 1px solid #dee2e6;
+  padding: 0.75rem;
+  // font-weight: bold;
+  text-align: inherit;
+}
+.custom-table {
+  width: 100%;
+  max-width: 100%;
+  // margin-bottom: 1rem;
+  display: table;
+  text-indent: initial;
+  background-color: transparent;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid #dee2e6;
+  text-align: center !important;
+  font-size: 12px;
+  margin-bottom: 0 !important;
+}

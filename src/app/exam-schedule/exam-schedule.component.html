@@ -1,0 +1,74 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ "exam-schedule" | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <pinch-zoom backgroundColor="rgba(0,0,0,0)">
+    <div style="height: 100% !important; width: 100%">
+      <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+        <ion-toolbar class="p-0">
+          <ion-buttons slot="start">
+            <ion-menu-button><ion-icon class="text-white" [ios]="'menu-sharp'"
+                [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+          </ion-buttons>
+          <ion-title>{{ "exam-schedule" | translate }}</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <div class="examschedule">
+        <app-segment (item)="selected($event)"></app-segment>
+
+        <ion-card class="card-cls" *ngIf="schedule.length > 0 && show">
+          <ion-card-content>
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th width="35%">{{ "date" | translate }}</th>
+                  <th>{{ "description" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of schedule">
+                  <td>
+                    <div class="date">{{ item.day }}</div>
+                    <div class="month">{{ item.month }}</div>
+                    <div style="clear: left;">{{ item.subject }}</div>
+                    <div>{{ item.time }}</div>
+                  </td>
+                  <td>
+                    <pre style="margin: 0; padding: 0; white-space: pre-wrap;"
+                      [innerHTML]="authservice.urlify(item.portion)"></pre>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card class="card-cls" *ngIf="schedule.length == 0 && show == true">
+          <ion-card-content class="card-body card_body card-cls-inside">
+            <table class="custom-table">
+              <tbody>
+                <tr>
+                  <td class="ion-text-center">
+                    {{ "no_records_found" | translate }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+  </pinch-zoom>
+</ion-content>

@@ -1,0 +1,10 @@
+<ion-segment class="shadow-lg" [(ngModel)]="segment" scrollable>
+  <ion-segment-button
+    *ngFor="let item of getStudentDetails"
+    [value]="item"
+    (click)="segmentButtonClicked($event, item)"
+    class="bg-white"
+  >
+    <ion-label>{{ item.NAME }}</ion-label>
+  </ion-segment-button>
+</ion-segment>

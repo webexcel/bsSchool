@@ -1,0 +1,75 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ "report-card" | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="background-color: #f8f9fa !important">
+  <pinch-zoom backgroundColor="rgba(0,0,0,0)">
+    <div style="height: 100% !important; width: 100%">
+      <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+        <ion-toolbar class="p-0">
+          <ion-buttons slot="start">
+            <ion-menu-button><ion-icon class="text-white" [ios]="'menu-sharp'"
+                [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+          </ion-buttons>
+          <ion-title>{{ "report-card" | translate }}</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <div class="reportcard">
+        <app-segment (item)="selected($event)"></app-segment>
+        <ion-card class="card-cls" *ngIf="data.length > 0 && show">
+          <ion-card-content>
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>{{ "subject" | translate }}</th>
+                  <th *ngFor="let e of exams">{{ e }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let s of subject">
+                  <td>{{ s }}</td>
+                  <td *ngFor="let d of data">{{ d[s] }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card class="card-cls" *ngIf="data.length > 0 && show">
+          <ion-card-content>
+            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+              [legend]="lineChartLegend" height="350">
+            </canvas>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card class="card-cls" *ngIf="data.length === 0 && show === true">
+          <ion-card-content class="card-body card_body card-cls-inside">
+            <table class="custom-table">
+              <tbody>
+                <tr>
+                  <td class="ion-text-center">
+                    {{ "no_records_found" | translate }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+  </pinch-zoom>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" tappable>
+    <ion-fab-button (click)="changeScreen()">
+      <img src="../../assets/imgs/Icons_new/rotation.png" style="padding: 15px;">
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

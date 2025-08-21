@@ -1,0 +1,254 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+@import 'swiper/css';
+
+:root {
+  --ion-color-primary: #4475de;
+}
+
+ion-title {
+  color: #fafafa;
+}
+.menuIcon {
+  color: #ffffff;
+}
+app-homework {
+  td {
+    font-size: 13px !important;
+  }
+}
+
+ion-avatar {
+  width: 48px !important;
+  height: 48px !important;
+}
+
+$colors: #4682b4 !important;
+$filter: invert(21%) sepia(81%) saturate(1905%) hue-rotate(239deg)
+  brightness(93%) contrast(96%);
+
+ion-toolbar {
+  --color: #ffffff;
+  --background: var(--ion-color-primary);
+}
+
+ion-menu-toggle {
+  .selected {
+    --background: #d9fbfb !important;
+  }
+}
+#inbox-list {
+  padding-top: 0% !important;
+}
+
+ion-menu {
+  ion-content {
+    --padding-top: 2% !important;
+  }
+}
+
+.setthemes {
+  color: #ffffff;
+  background: var(--ion-color-primary);
+}
+
+@import url(//fonts.googleapis.com/css?family=Montserrat:400:300:500:600);
+app-login {
+  overflow: hidden;
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+}
+
+.card_body {
+  // padding: 0.25rem;
+  .card-header {
+    padding: 0 !important;
+  }
+  //.card-body {
+  // padding: 0.25rem!important;
+  //}
+  img {
+    width: 60px;
+  }
+  .panel-heading {
+    background: $colors;
+  }
+  .btn-link {
+    color: #fff;
+  }
+}
+
+.icon_menu {
+  color: var(--ion-color-primary) !important;
+}
+
+ion-content {
+  --background: #fff;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 180px;
+  //margin-right: 20px;
+}
+.btn-primary,
+.table .thead-dark th {
+  background-color: $colors;
+  border-color: #fff !important;
+}
+
+.calendar {
+  [col1] {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 8.33333%;
+    -ms-flex: 0 0 8.33333%;
+    flex: 0 0 14.285714285714286%;
+    width: 14.285714285714286%;
+    max-width: 14.285714285714286%;
+    border: solid 1px grey;
+    padding: 10px;
+  }
+  .col {
+    text-align: center;
+    padding: 1px;
+  }
+
+  .last-month,
+  .next-month {
+    color: #999999;
+    font-size: 80%;
+    background-color: #eee;
+    text-align: center;
+  }
+  .currentDate {
+    background-color: #4682b4;
+  }
+  .currentDate {
+    font-weight: bold;
+    color: white;
+    // border-radius: 30px;
+    // background-color: red;
+  }
+  .calendar-month {
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 30px;
+    border-bottom: solid 1px #fff;
+    background-color: $colors;
+  }
+  .calendar-weekday {
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 30px;
+    background-color: $colors;
+    //border-bottom: solid 1px #1a732d;
+  }
+  .calendar-body {
+    .grid {
+      padding: 0;
+      //border: solid 1px red;
+    }
+    .col:last-child {
+      border-right: none;
+    }
+    .calendar-weekday,
+    .calendar-date {
+      text-align: center;
+      margin: 0;
+    }
+  }
+}
+
+ion-segment-button {
+  color: $colors;
+}
+
+.header-date,
+.header-select-date,
+.weekdays-container {
+  background: $colors;
+  color: #fff !important;
+}
+
+.ngx-loading-text {
+  width: 100% !important;
+  text-align: center !important;
+}
+
+#outerContainer .hiddenSmallView {
+  display: inline !important;
+  svg {
+    display: inline !important;
+    path {
+      display: inline !important;
+    }
+  }
+}
+
+// @media (max-width: 914.764397905759px){
+//   #outerContainer .hiddenSmallView, #outerContainer .hiddenSmallView * {
+//     display: inline!important;
+//   }
+// }
+
+.table {
+  margin-bottom: 0 !important;
+}
+.panel-body {
+  padding: 0 !important;
+}
+
+.multi_lines_text {
+  white-space: pre-line;
+  // line-height: 8px;
+}
+
+.textarea-label-placement-start.sc-ion-textarea-md-h
+  .textarea-wrapper.sc-ion-textarea-md {
+  height: 95px;
+}
+pre {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+}
+
+.cal-modal {
+  --height: 80%;
+  --border-radius: 10px;
+  padding: 25px;
+}
+
+audio {
+  width: 100%;
+}
+
+audio::-webkit-media-controls-panel {
+  background-color: none;
+  color: #fff;
+}

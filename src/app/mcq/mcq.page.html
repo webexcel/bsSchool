@@ -1,0 +1,238 @@
+<ion-header [translucent]="true">
+  <ion-toolbar *ngIf="presentView == 'examList'">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>MCQ</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="presentView == 'questionView'">
+    <ion-label style="margin-left: 10px;">Time Left: {{ minutes < 10 ? '0' + minutes : minutes }}:{{ seconds < 10 ? '0'
+        + seconds : seconds }}</ion-label>
+        <ion-buttons slot="end">
+          <ion-button (click)="submitExam()">Submit<ion-icon name="send"
+              style="margin-left: 5px;"></ion-icon></ion-button>
+        </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="presentView == 'resultView'">
+    <ion-buttons slot="end">
+      <ion-button (click)="closeResult()"><ion-icon name="close"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="presentView == 'examHistory'">
+    <ion-title>MCQ History</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeResult()"><ion-icon name="close"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="presentView == 'examList'">
+  <app-segment (item)="selected($event)"></app-segment>
+  <div>
+    <ion-card *ngFor="let item of exams; let i = index">
+      <ion-card-content>
+        <div style="display: flex; justify-content: space-between;">
+          <div><ion-label style="color: #4475de;">{{item.qus_paper_name}}</ion-label></div>
+          <div><ion-label style="color: #FF7C02;">{{formatDate(item.qus_date)}}</ion-label></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+          <div><ion-label style="color: #525151;">{{item.sub_name}}</ion-label></div>
+          <div *ngIf="item.examStatus != 'COMPLETED'"><ion-label (click)="startExam(item)" style="color: #269201;">Click
+              Here to Start >></ion-label></div>
+          <div *ngIf="item.examStatus == 'COMPLETED'"><ion-label (click)="historyExam(item)"
+              style="color: #269201;">Completed History >></ion-label></div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<ion-content [fullscreen]="true" *ngIf="presentView == 'questionView'">
+  <div style="height: 80%; overflow: overlay;">
+    <div>
+      <ion-card>
+        <ion-card-content style="padding: 0;">
+          <ion-row>
+            <ion-col style="color: blue; margin-left: 5px;">{{currentExam.sub_name}}</ion-col>
+            <ion-col style="color: orangered; text-align: end; margin-right: 5px;">{{currentExam.qus_date}}</ion-col>
+          </ion-row>
+          <!-- <ion-row>
+            <ion-col style="color: #53d743; margin-left: 5px;">{{currentExam.supervisedBy}}</ion-col>
+          </ion-row> -->
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <ion-card class="quesCardClass" [ngClass]="{'show': showCard}" style="min-height: 85%;">
+      <ion-card-header>
+        <ion-row>
+          <ion-col size="1.5"
+            style="background-color: #5886FE; color: white; border: 1px solid #dddddd; border-radius: 5px; display: flex; align-items: center; justify-content: center;">
+            <ion-label>{{selectedQuestionIndex + 1}}</ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-label>{{selectedQuestion?.qus_name}}</ion-label>
+          </ion-col>
+        </ion-row>
+
+      </ion-card-header>
+      <ion-card-content style="padding: 0;">
+        <div *ngIf="selectedQuestion.qus_type == 'text'">
+          <div class="optClass" [ngClass]="{'selectedOpt': selectedQuestion.opt1 == selectedQuestion.studentAns}"
+            (click)="selectedOpt(selectedQuestion.opt1, 1)">
+            <ion-label style="margin-left: 5px;">1. {{selectedQuestion.opt1}}</ion-label>
+          </div>
+          <div class="optClass" [ngClass]="{'selectedOpt': selectedQuestion.opt2 == selectedQuestion.studentAns}"
+            (click)="selectedOpt(selectedQuestion.opt2, 2)">
+            <ion-label style="margin-left: 5px;">2. {{selectedQuestion.opt2}}</ion-label>
+          </div>
+          <div class="optClass" [ngClass]="{'selectedOpt': selectedQuestion.opt3 == selectedQuestion.studentAns}"
+            (click)="selectedOpt(selectedQuestion.opt3, 3)">
+            <ion-label style="margin-left: 5px;">3. {{selectedQuestion.opt3}}</ion-label>
+          </div>
+          <div class="optClass" [ngClass]="{'selectedOpt': selectedQuestion.opt4 == selectedQuestion.studentAns}"
+            (click)="selectedOpt(selectedQuestion.opt4, 4)">
+            <ion-label style="margin-left: 5px;">4. {{selectedQuestion.opt4}}</ion-label>
+          </div>
+        </div>
+        <div *ngIf="selectedQuestion.qus_type == 'img'" class="image-container">
+          <div class="optImgClass" [ngClass]="{'selectedOptImg': selectedQuestion.opt1 == selectedQuestion.studentAns}"
+            (click)="selectedOpt(selectedQuestion.opt1, 1)">
+            <img src="../../assets/imgs/appicon.png" alt="appIcon" class="image-item">
+          </div>
+          <div class="optImgClass" [ngClass]="{'selectedOptImg': selectedQuestion.opt2 == selectedQuestion.studentAns}"
+            (click)="selectedOpt(selectedQuestion.opt2, 2)">
+            <img src="../../assets/imgs/appicon.png" alt="appIcon" class="image-item">
+          </div>
+          <div class="optImgClass" [ngClass]="{'selectedOptImg': selectedQuestion.opt3 == selectedQuestion.studentAns}"
+            (click)="selectedOpt(selectedQuestion.opt3, 3)">
+            <img src="../../assets/imgs/appicon.png" alt="appIcon" class="image-item">
+          </div>
+          <div class="optImgClass" [ngClass]="{'selectedOptImg': selectedQuestion.opt4 == selectedQuestion.studentAns}"
+            (click)="selectedOpt(selectedQuestion.opt4, 4)">
+            <img src="../../assets/imgs/appicon.png" alt="appIcon" class="image-item">
+          </div>
+        </div>
+      </ion-card-content>
+      <ion-buttons style="position: absolute; bottom: 10px; right: 20px;">
+        <ion-button *ngIf="selectedQuestionIndex > 0" (click)="selectQuestion(selectedQuestionIndex - 1)"
+          style="background-color: #53d743; color: white; border-radius: 10px; width: 100px;"><ion-icon
+            name="play-skip-back" style="margin-right: 5px;"></ion-icon>Prev</ion-button>
+        <ion-button *ngIf="this.questionList.length - 1 > selectedQuestionIndex"
+          (click)="selectQuestion(selectedQuestionIndex + 1)"
+          style="background-color: #53d743; color: white; border-radius: 10px; width: 100px;">Next<ion-icon
+            name="play-skip-forward" style="margin-left: 5px;"></ion-icon></ion-button>
+        <ion-button *ngIf="this.questionList.length - 1 === selectedQuestionIndex" (click)="submitExam()"
+          style="background-color: #5886FE; color: white; border-radius: 10px; width: 100px;">Submit<ion-icon
+            name="send" style="margin-left: 5px;"></ion-icon></ion-button>
+      </ion-buttons>
+    </ion-card>
+  </div>
+  <div style="height: 20%; overflow-x: auto; white-space: nowrap; padding: 15px 20px 0 20px;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-around; width: 100%;">
+      <ion-label class="quesNumClass" *ngFor="let ques of questionList; let i = index"
+        [ngClass]="{'currentQuestion': selectedQuestionIndex == i, 'quesAnswered': ques.studentAnsStatus == 'answered', 'quesSkipped': ques.studentAnsStatus == 'skipped'}"
+        (click)="selectQuestion(i)">
+        {{i + 1}}
+      </ion-label>
+    </div>
+  </div>
+</ion-content>
+
+<ion-content [fullscreen]="true" *ngIf="presentView == 'resultView'">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-label>Total Questions : </ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label>{{totalQuestions}}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label>Total Marks : </ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label>{{totalMarks}}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label>Your Mark : </ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label>{{gainedMark}}</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-content [fullscreen]="true" *ngIf="presentView == 'examHistory'">
+  <div>
+    <ion-card style="background-color: #eef2ff;">
+      <ion-card-header>
+        <ion-row>
+          <ion-col size="6"><ion-label class="gradient-text">{{quesScore.qus_paper_name}}</ion-label></ion-col>
+          <ion-col size="6"><ion-label class="gradient-text">{{quesScore.sub_name}}</ion-label></ion-col>
+        </ion-row>
+      </ion-card-header>
+      <ion-card-content>
+        <div>
+          <ion-row>
+            <ion-col size="6"><ion-label class="gradient-text">Total Questions:
+                {{quesScore.total_questions}}</ion-label></ion-col>
+            <ion-col size="6"><ion-label class="gradient-text">Attended Questions:
+                {{quesScore.attended_questions}}</ion-label></ion-col>
+          </ion-row>
+        </div>
+        <div>
+          <ion-row>
+            <ion-col size="6"><ion-label class="gradient-text">Skipped Questions:
+                {{quesScore.not_attended}}</ion-label></ion-col>
+            <ion-col size="6"><ion-label class="gradient-text">Correct Answers:
+                {{quesScore.correct_answers}}</ion-label></ion-col>
+          </ion-row>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div style="margin: 10px; background: #4475de; color: white; padding: 10px; border-radius: 5px; margin-top: 20px;">
+    <ion-label>Question List:</ion-label>
+  </div>
+  <div>
+    <ion-card *ngFor="let item of questionHistory; let i = index"
+      [ngClass]="{'wrongQues': item.correct_opt != item.attend, 'correctQues': item.correct_opt == item.attend}">
+      <ion-card-header>
+        <div>
+          <ion-label style="font-weight: 500; color: #454545;">{{i+1}}. {{item.qus_name}}</ion-label>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col size="6"><ion-label>1. {{item.opt1}}</ion-label></ion-col>
+          <ion-col size="6"><ion-label>2. {{item.opt2}}</ion-label></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6"><ion-label>3. {{item.opt3}}</ion-label></ion-col>
+          <ion-col size="6"><ion-label>4. {{item.opt4}}</ion-label></ion-col>
+        </ion-row>
+
+        <div style="margin-top: 10px; display: flex; justify-content: space-around; font-weight: 500;">
+          <ion-label>Correct Answer: {{item.correct_opt}}</ion-label>
+          <ion-label>Your Answer: {{item.attend}}</ion-label>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

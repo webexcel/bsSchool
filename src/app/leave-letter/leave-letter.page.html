@@ -1,0 +1,169 @@
+<ion-header [translucent]="true">
+  <ion-toolbar *ngIf="presentView == 'view'">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Leave Letter</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="presentView == 'add' || presentView == 'edit'">
+    <ion-buttons slot="start">
+      <ion-button (click)="resetForm()">{{
+        "Close" | translate
+        }}</ion-button>
+    </ion-buttons>
+    <!-- <ion-title>{{ "Add Event" | translate }}</ion-title> -->
+    <ion-buttons slot="end">
+      <ion-button (click)="saveLeaveRequest()" [strong]="true">{{
+        "Save" | translate
+        }}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="presentView == 'view'">
+  <app-segment (item)="selected($event)"></app-segment>
+
+  <div class="Students" *ngIf="leaveDetails.length > 0">
+    <div class="info-container-main">
+      <div class="info-column">From</div>
+      <div class="info-column">To</div>
+      <div class="info-column">Reason</div>
+      <div class="info-column">Status</div>
+      <div class="info-column"></div>
+    </div>
+
+    <div class="info-container" *ngFor="let leave of leaveDetails; let i = index">
+      <div class="info-column">{{ leave.fdate | date: 'dd-MM-yyyy' }}</div>
+      <div class="info-column">{{ leave.tdate | date: 'dd-MM-yyyy' }}</div>
+      <div class="info-column">{{ leave.reson }}</div>
+      <div class="info-column">{{ leave.leaveStatus }}</div>
+      <div class="info-column" *ngIf="leave.leaveStatus == 'REQUEST'">
+        <ion-button (click)="editLeaveRecord(i)"><ion-icon name="pencil"></ion-icon></ion-button>
+        <ion-button (click)="deleteLeaveRecord(i)"><ion-icon name="trash"></ion-icon></ion-button>
+      </div>
+    </div>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" tappable>
+    <ion-fab-button (click)="toggleContent()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<ion-content *ngIf="presentView == 'add' || presentView == 'edit'">
+  <div>
+    <div style="margin: 10px">Start Date</div>
+    <ion-item lines="full" class="dropdown" style="margin: 10px; border: 1px solid #8080806b;">
+      <ion-label id="open-start-modal" class="selected-date" (click)="toggleDateSelection('start')">
+        <span style="float: left">
+          {{ formatDate(formData.s_date) }}
+        </span>
+
+        <span style="float: right !important">
+          <img style="height: 6px; width: 10px; margin-right: 5px" src="../../assets/imgs/speakers/Polygon 4.png" />
+        </span>
+      </ion-label>
+
+      <ion-modal [isOpen]="isStartDateSelection" trigger="open-start-modal"
+        (willDismiss)="onWillDismiss($event, 'start')" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.25, 0.5, 0.75]"
+        animated="true">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-button (click)="cancel_date('start')">{{
+                  "cancel" | translate
+                  }}</ion-button>
+              </ion-buttons>
+              <ion-buttons slot="end">
+                <ion-button (click)="confirm_date('start')" [strong]="true">{{
+                  "confirm" | translate
+                  }}</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <ion-datetime name="dob" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="s_date"
+              #dob="ngModel" presentation="date" mode="md" #datetime required>
+            </ion-datetime>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+
+    <div style="margin: 10px">End Date</div>
+    <ion-item lines="full" class="dropdown" style="margin: 10px; border: 1px solid #8080806b;">
+      <ion-label id="open-end-modal" class="selected-date" (click)="toggleDateSelection('end')">
+        <span style="float: left">
+          {{ formatDate(formData.e_date) }}
+        </span>
+
+        <span style="float: right !important">
+          <img style="height: 6px; width: 10px; margin-right: 5px" src="../../assets/imgs/speakers/Polygon 4.png" />
+        </span>
+      </ion-label>
+
+      <ion-modal [isOpen]="isEndDateSelection" trigger="open-end-modal" (willDismiss)="onWillDismiss($event, 'end')"
+        [initialBreakpoint]="0.5" [breakpoints]="[0, 0.25, 0.5, 0.75]" animated="true">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-button (click)="cancel_date('end')">{{
+                  "cancel" | translate
+                  }}</ion-button>
+              </ion-buttons>
+              <ion-buttons slot="end">
+                <ion-button (click)="confirm_date('end')" [strong]="true">{{
+                  "confirm" | translate
+                  }}</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <ion-datetime name="dob" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="e_date"
+              #dob="ngModel" presentation="date" mode="md" #datetime required>
+            </ion-datetime>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+
+    <div style="margin: 10px">Reason</div>
+    <ion-item lines="full" class="messageArea" style="margin: 10px; border: 1px solid #8080806b;">
+      <ion-textarea type="text" name="message" [(ngModel)]="formData.reason" #message="ngModel">
+      </ion-textarea>
+    </ion-item>
+
+    <div style="margin: 10px;">Select Session</div>
+    <ion-item lines="full" class="dropdown" style="margin: 10px; border: 1px solid #8080806b;">
+      <ion-select [(ngModel)]="formData.selectedSession">
+        <ion-select-option *ngFor="let option of select_sessions" [value]="option.id">
+          {{ option.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <div style="display: flex; justify-content: end;">
+      <ion-button style="margin-right: 20px;" (click)="open()"><ion-icon name="attach"></ion-icon>Attach
+        File</ion-button>
+    </div>
+
+    <ion-buttons style="display: flex; justify-content: center;">
+      <ion-button class="saveButton" (click)="saveLeaveRequest()">
+        <ion-icon style="margin-right: 5px;" name="save"></ion-icon>Save
+      </ion-button>
+    </ion-buttons>
+  </div>
+</ion-content>

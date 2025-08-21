@@ -1,0 +1,580 @@
+{
+  "project_info": {
+    "project_number": "194329587171",
+    "project_id": "iosproject-96e27",
+    "storage_bucket": "iosproject-96e27.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:f1d74369bb543db53144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.aadhithya"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:92c05ab44df50c523144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.alphaInternational"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:3fb261a2bbcc89243144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.alphamatric"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:b2e9c1b1885ceb693144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.association"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:93f5aec78a92db763144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.balakrishna"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:dc5c1f7149020b923144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.bs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:7bf073372cff96c63144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.caad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:a272c1407618970a3144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.carmel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:77a1690d03e9ae833144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.csi_thomas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:2f1978bcc3e22ebe3144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.doon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:9b860d909c13fae93144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.homechruch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:9d21c39d35cdcd6c3144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.janet_maduravoyal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:b5b3c94785d5638d3144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.janet_tvk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:e38083dc259d8b063144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.kalaimagal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:206cd4d8087b94d83144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.kalalaya"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:0e6f4cd50f6ede893144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.koodakovil"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:12f185ff28cdbd393144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.little_angels"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:59ac9bc4804570533144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.lotus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:1a976b8ba78ff7bd3144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.mylai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:1077fe3c9fb60d013144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.parentpay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:fcee1b1977a8d7c23144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.shining_angels"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:72ae4ca9296bf3f23144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.srvm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:09bfcc037fb501e43144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.st_antonys"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:09dc89fcec382c043144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.stjoseph"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:139cf8e3385a76fc3144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.templegreen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:390b97440661e55e3144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.tuition"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:6b76b5bf2fff44423144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.usha_convent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:970cc4ee11a40c543144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.venkateshwara"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:4b96a221783f97c63144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.venus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:15d58f67403960a83144d6",
+        "android_client_info": {
+          "package_name": "holyangels.tnagar.schoolapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
